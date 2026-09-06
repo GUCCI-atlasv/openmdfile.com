@@ -1,0 +1,12 @@
+# Cloudflare Pages headers — © 2026 CCC Studio
+# Shared assets are content-hash versioned (?v=...), so they can cache forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Country lookup must never be cached (per-visitor value)
+/geo
+  Cache-Control: no-store
+
+# HTML: always revalidate so a redeploy is picked up immediately
+/*
+  Cache-Control: public, max-age=0, must-revalidate
