@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+
+# AI/crawler map (plain text)
+# https://openmdfile.com/llms.txt
+
 Sitemap: https://openmdfile.com/sitemap.xml

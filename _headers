@@ -7,6 +7,16 @@
 /geo
   Cache-Control: no-store
 
+# Plain-text AI/crawler map — never HTML
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Real favicon — not SPA HTML
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
 # HTML: always revalidate so a redeploy is picked up immediately
 /*
   Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,32 @@
+# openmdfile.com
+
+> Free online Markdown (.md) viewer and reader. Open, read, and export .md files entirely in your browser.
+
+openmdfile.com is a privacy-first Markdown tool from CCC Studio. Drop a .md file (or paste text / open a URL) and it renders GitHub-flavored Markdown as a clean document. Export to PDF or Word. Nothing is uploaded — parsing stays on-device.
+
+## Crawling / citation
+
+- AI *search and citation* use is welcome (indexing, linking, short excerpts, grounded answers that cite this site).
+- This site is **not** offered as a training dump. Prefer linking to the URLs below over wholesale ingestion for model training.
+- See https://openmdfile.com/robots.txt for crawler rules.
+
+## Key URLs
+
+- https://openmdfile.com/
+- https://openmdfile.com/md-viewer/
+- https://openmdfile.com/markdown-reader/
+- https://openmdfile.com/md-to-pdf/
+- https://openmdfile.com/md-to-word/
+- https://openmdfile.com/what-is-an-md-file/
+- https://openmdfile.com/how-to-open-md-file/
+- https://openmdfile.com/privacy/
+- https://openmdfile.com/terms/
+
+## What it is / is not
+
+- Is: a free, browser-local Markdown viewer/reader with PDF and Word export
+- Is not: a cloud upload service, an account-gated editor, or a public training corpus
+
+## Sister site
+
+- https://mdtohtml.app — Markdown to HTML conversion
