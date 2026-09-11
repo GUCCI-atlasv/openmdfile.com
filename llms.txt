@@ -19,6 +19,7 @@ openmdfile.com is a privacy-first Markdown tool from CCC Studio. Drop a .md file
 - https://openmdfile.com/md-to-word/
 - https://openmdfile.com/what-is-an-md-file/
 - https://openmdfile.com/how-to-open-md-file/
+- https://openmdfile.com/learn/open-markdown-without-uploading/
 - https://openmdfile.com/privacy/
 - https://openmdfile.com/terms/
 
