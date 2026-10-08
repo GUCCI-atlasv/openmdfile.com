@@ -81,9 +81,37 @@ function geoPreset(){
   }catch(e){}
 }
 function t(k){return (JT[LANG]||JT.en)[k]}
+
+/* SEO: default H1 is EN-only in HTML (no zh/ar/hi glyphs in <h1>); lang switcher swaps from this map.
+   Values may contain <em> markup (static strings, ours). EN restores the original server HTML. */
+(function(){
+  var path=(location.pathname||'/').replace(/\/index\.html$/,'/').replace(/\/+$/,'')||'/';
+  var maps={
+    "/":{"en": "Open MD File Online", "zh": "在线打开 MD 文件", "ar": "افتح ملف MD عبر الإنترنت", "hi": "ऑनलाइन MD फ़ाइल खोलें"},
+    "/how-to-open-md-file":{"en": "How to Open an MD File", "zh": "如何打开 MD 文件", "ar": "كيف تفتح ملف MD", "hi": "MD फ़ाइल कैसे खोलें"},
+    "/learn/open-markdown-without-uploading":{"en": "How to open a Markdown file <em>without uploading</em> it", "zh": "如何<em>不上传</em>打开 Markdown 文件", "ar": "كيف تفتح ملف ماركداون <em>دون رفعه</em>", "hi": "Markdown फ़ाइल को <em>अपलोड किए बिना</em> कैसे खोलें"},
+    "/markdown-reader":{"en": "Markdown Reader — <em>source</em> and <em>preview</em>, side by side", "zh": "Markdown 阅读器——<em>源码</em>与<em>预览</em>左右对照", "ar": "قارئ ماركداون — <em>الشيفرة</em> و<em>المعاينة</em> جنبًا إلى جنب", "hi": "मार्कडाउन रीडर — <em>स्रोत</em> और <em>प्रीव्यू</em> साथ-साथ"},
+    "/md-to-pdf":{"en": "MD to <em>PDF</em> Converter — Free, No Watermark", "zh": "MD 转 <em>PDF</em> 转换器——免费、无水印", "ar": "محوّل MD إلى <em>PDF</em> — مجاني وبدون علامة مائية", "hi": "MD से <em>PDF</em> कन्वर्टर — मुफ़्त, बिना वॉटरमार्क"},
+    "/md-to-word":{"en": "MD to <em>Word</em> — keep it editable", "zh": "MD 转 <em>Word</em>——保持可编辑", "ar": "MD إلى <em>Word</em> — يبقى قابلًا للتحرير", "hi": "MD से <em>Word</em> — संपादन-योग्य रखें"},
+    "/md-viewer":{"en": "MD Viewer — view <em>Markdown</em> files online", "zh": "MD 查看器——在线查看 <em>Markdown</em> 文件", "ar": "عارض MD — اعرض ملفات <em>ماركداون</em> عبر الإنترنت", "hi": "MD व्यूअर — <em>Markdown</em> फ़ाइलें ऑनलाइन देखें"},
+    "/privacy":{"en": "Privacy Policy", "zh": "隐私协议", "ar": "سياسة الخصوصية", "hi": "गोपनीयता नीति"},
+    "/terms":{"en": "Terms of Service", "zh": "服务条款", "ar": "شروط الخدمة", "hi": "सेवा की शर्तें"},
+    "/what-is-an-md-file":{"en": "What is an <em>.md</em> file?", "zh": "什么是 <em>.md</em> 文件？", "ar": "ما هو ملف <em>.md</em>؟", "hi": "<em>.md</em> फ़ाइल क्या है?"}
+  };
+  window.PAGE_H1_I18N=maps[path]||null;
+})();
+
 function applyLang(){
   var h=document.documentElement;
   h.setAttribute('data-lang',LANG);
+  var pageH1=document.getElementById('pageH1');
+  if(pageH1){
+    if(pageH1.__enHTML==null) pageH1.__enHTML=pageH1.innerHTML;
+    var map=window.PAGE_H1_I18N||{};
+    var hv=(LANG!=='en'&&map[LANG])?map[LANG]:null;
+    pageH1.innerHTML=hv||pageH1.__enHTML;
+    if(LANG==='ar') pageH1.setAttribute('dir','rtl'); else pageH1.removeAttribute('dir');
+  }
   h.lang=({en:'en',zh:'zh-CN',ar:'ar',hi:'hi'})[LANG]||'en';
   h.setAttribute('dir',RTL[LANG]?'rtl':'ltr');
   var cur=LANGS.filter(function(l){return l.c===LANG})[0]||LANGS[0];

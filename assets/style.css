@@ -39,7 +39,7 @@ svg.i{width:1.1em;height:1.1em;flex-shrink:0;stroke:currentColor;fill:none;strok
 [data-lang="ar"] body,[data-lang="hi"] body{line-height:1.75}
 /* Arabic & Devanagari: no tight tracking, roomier lines */
 [data-lang="ar"] .hero h1,[data-lang="hi"] .hero h1,
-[data-lang="ar"] .dropzone h2,[data-lang="hi"] .dropzone h2,
+[data-lang="ar"] .dropzone h2,[data-lang="hi"] .dropzone h2,[data-lang="ar"] .dropzone .dz-title,[data-lang="hi"] .dropzone .dz-title,
 [data-lang="ar"] .feature h3,[data-lang="hi"] .feature h3,
 [data-lang="ar"] .prose h2,[data-lang="hi"] .prose h2,
 [data-lang="ar"] .prose h3,[data-lang="hi"] .prose h3{letter-spacing:0}
@@ -126,7 +126,7 @@ nav.site-nav a:hover,nav.site-nav a.on{color:var(--text);background:var(--bg-sub
 .dropzone .dz-icon{width:52px;height:52px;margin:0 auto 16px;border-radius:12px;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;transition:.2s}
 .dropzone .dz-icon svg.i{width:24px;height:24px}
 .dropzone.dragover .dz-icon{transform:scale(1.08)}
-.dropzone h2{font-size:17px;font-weight:600;letter-spacing:-.2px}
+.dropzone h2,.dropzone .dz-title{font-size:17px;font-weight:600;letter-spacing:-.2px;margin:0}
 .dropzone p{color:var(--text-2);font-size:13px;margin-top:5px}
 .dz-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
 .btn{display:inline-flex;align-items:center;gap:7px;border-radius:var(--r);font-size:13px;font-weight:500;padding:9px 15px;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:.15s;text-decoration:none}
@@ -418,3 +418,5 @@ html[dir="rtl"] .cmp-arrow svg{transform:scaleX(-1)}
   .print-header{display:block!important;font-size:9pt;color:#888;border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:18px}
 }
 .print-header{display:none}
+
+.hero .lede{max-width:640px;margin:14px auto 0;color:var(--text-2);font-size:15px;line-height:1.7}
