@@ -1,7 +1,8 @@
 # Cloudflare Pages headers — © 2026 CCC Studio
-# Shared assets are content-hash versioned (?v=...), so they can cache forever.
+# /assets/*: long browser cache OK for real files; no `immutable` on the wildcard
+# so a mistaken HTML/404 under an asset URL cannot stick in CF edge forever.
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, must-revalidate
 
 # Country lookup must never be cached (per-visitor value)
 /geo

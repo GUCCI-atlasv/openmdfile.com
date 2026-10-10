@@ -6,11 +6,6 @@
 <title>Open a Markdown File Without Uploading It | openmdfile</title>
 <meta name="description" content="Open and preview .md files in your browser — no upload, no account. Local GFM rendering, then PDF or Word if you need them.">
 <link rel="canonical" href="https://openmdfile.com/learn/open-markdown-without-uploading/">
-<link rel="alternate" hreflang="en" href="https://openmdfile.com/learn/open-markdown-without-uploading/">
-<link rel="alternate" hreflang="zh" href="https://openmdfile.com/learn/open-markdown-without-uploading/?lang=zh">
-<link rel="alternate" hreflang="ar" href="https://openmdfile.com/learn/open-markdown-without-uploading/?lang=ar">
-<link rel="alternate" hreflang="hi" href="https://openmdfile.com/learn/open-markdown-without-uploading/?lang=hi">
-<link rel="alternate" hreflang="x-default" href="https://openmdfile.com/learn/open-markdown-without-uploading/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="openmdfile">
 <meta property="og:title" content="Open a Markdown File Without Uploading It | openmdfile">
@@ -37,22 +32,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need to install anything to open a Markdown file without uploading?","acceptedAnswer":{"@type":"Answer","text":"No. openmdfile.com runs in your browser. Once the page and its libraries have loaded, choosing a .md file reads it locally with the File API — nothing is installed and nothing is uploaded."}},{"@type":"Question","name":"Does browser-local opening support GitHub Flavored Markdown (GFM)?","acceptedAnswer":{"@type":"Answer","text":"Yes. The viewer renders GitHub Flavored Markdown, including tables, task lists, fenced code blocks with highlighting, strikethrough, and common extensions such as Mermaid diagrams and KaTeX math when those libraries are available on the page."}},{"@type":"Question","name":"How is openmdfile.com different from mdtohtml.app?","acceptedAnswer":{"@type":"Answer","text":"openmdfile.com is for opening, reading, and exporting .md files as a document (preview, PDF, Word). mdtohtml.app is the sister tool for converting or publishing Markdown as HTML for the web. Use openmdfile to read; use mdtohtml when you need HTML output."}},{"@type":"Question","name":"Do your servers log my Markdown file contents?","acceptedAnswer":{"@type":"Answer","text":"No. File contents never leave your browser for preview or for PDF/Word export. We do not receive or store your document. Optional requests (CDN scripts, country hint for language, page analytics) do not include your Markdown text."}},{"@type":"Question","name":"What formats and size limits do you support?","acceptedAnswer":{"@type":"Answer","text":"Only .md, .markdown, and .txt. Soft cap about 10 MB — larger files belong in a desktop editor."}},{"@type":"Question","name":"Does a local drop upload my document for preview or PDF/Word?","acceptedAnswer":{"@type":"Answer","text":"No. Local drop uses the File API in your tab. Preview and PDF/Word export do not upload the document body to our servers."}},{"@type":"Question","name":"Is Open from URL a zero-network path?","acceptedAnswer":{"@type":"Answer","text":"No. Your browser fetches the remote host you typed — that is not a zero-network path. Even for local files, CDN scripts and an optional geo language hint may still load; they do not include your Markdown text."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need to install anything?","acceptedAnswer":{"@type":"Answer","text":"No. openmdfile.com runs in your browser. Once the page and its libraries have loaded, choosing a .md file reads it locally with the File API — nothing to install, nothing uploaded."}},{"@type":"Question","name":"Does it support GitHub Flavored Markdown (GFM)?","acceptedAnswer":{"@type":"Answer","text":"Yes. The viewer renders GFM including tables, task lists, fenced code with highlighting, strikethrough, and common extras such as Mermaid diagrams and KaTeX math when those libraries are on the page."}},{"@type":"Question","name":"How is this different from mdtohtml.app?","acceptedAnswer":{"@type":"Answer","text":"openmdfile.com is for opening, reading, and exporting .md as a document (preview, PDF, Word). mdtohtml.app is the sister tool for converting or publishing Markdown as HTML for the web. Use openmdfile to read; use mdtohtml when you need HTML output."}},{"@type":"Question","name":"Do your servers log my Markdown file contents?","acceptedAnswer":{"@type":"Answer","text":"No. File contents never leave your browser for preview or for PDF/Word export. We do not receive or store your document. Optional requests (CDN scripts, country hint for language, page analytics) do not include your Markdown text."}},{"@type":"Question","name":"What formats and size limits do you support?","acceptedAnswer":{"@type":"Answer","text":"Only .md, .markdown, and .txt. Soft cap about 10 MB — larger files belong in a desktop editor."}},{"@type":"Question","name":"Does a local drop upload my document for preview or PDF/Word?","acceptedAnswer":{"@type":"Answer","text":"No. Local drop uses the File API in your tab. Preview and PDF/Word export do not upload the document body to our servers."}},{"@type":"Question","name":"Is “Open from URL” a zero-network path?","acceptedAnswer":{"@type":"Answer","text":"No. Your browser fetches the remote host you typed — that is not a zero-network path. Even for local files, CDN scripts and an optional geo language hint may still load; they do not include your Markdown text."}}]}</script>
 </head>
 <body>
 <div id="page">
 
 <header class="site">
   <div class="header-inner">
-    <a class="logo" href="../../index.html"><span class="logo-badge">.MD</span>openmdfile</a>
+    <a class="logo" href="/"><span class="logo-badge">.MD</span>openmdfile</a>
     <nav class="site-nav">
-      <a href="../../md-viewer/index.html"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-      <a href="../../markdown-reader/index.html"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-      <a href="../../md-to-pdf/index.html"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-      <a href="../../md-to-word/index.html"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-      <a href="../../what-is-an-md-file/index.html"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-      <a href="../../how-to-open-md-file/index.html"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-      <a href="./index.html" class="on"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+      <a href="/md-viewer/"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
+      <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
+      <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
+      <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
+      <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
+      <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
+      <a href="/learn/open-markdown-without-uploading/" class="on"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
     </nav>
     <div class="header-actions">
       <div class="lang-wrap">
@@ -66,16 +61,16 @@
 <div class="wrap">
   <section class="hero compact">
     <span class="kicker"><span class="lang-en">Privacy-first · browser-local</span><span class="lang-zh">隐私优先 · 浏览器本地</span><span class="lang-ar" dir="rtl">خصوصية أولًا · محلي في المتصفح</span><span class="lang-hi">गोपनीयता-पहले · ब्राउज़र-लोकल</span></span>
-    <h1><span class="lang-en">How to open a Markdown file <em>without uploading</em> it</span><span class="lang-zh">如何<em>不上传</em>打开 Markdown 文件</span><span class="lang-ar" dir="rtl">كيف تفتح ملف ماركداون <em>دون رفعه</em></span><span class="lang-hi">Markdown फ़ाइल को <em>अपलोड किए बिना</em> कैसे खोलें</span></h1>
+    <h1 id="pageH1">How to open a Markdown file <em>without uploading</em> it</h1>
     <p class="sub"><span class="lang-en">Preview .md in your browser with local GFM rendering — no account, no upload. Export PDF or Word only if you need them.</span><span class="lang-zh">在浏览器本地以 GFM 预览 .md——无需账号、无需上传。需要时再导出 PDF 或 Word。</span><span class="lang-ar" dir="rtl">عاين .md في متصفحك بعرض GFM محلي — بلا حساب وبلا رفع. صدّر PDF أو Word فقط عند الحاجة.</span><span class="lang-hi">ब्राउज़र में लोकल GFM के साथ .md प्रीव्यू करें — कोई अकाउंट नहीं, कोई अपलोड नहीं। ज़रूरत हो तो ही PDF या Word एक्सपोर्ट करें।</span></p>
-    <p style="margin-top:18px"><a class="btn primary" href="../../index.html"><span class="lang-en">Open on the homepage →</span><span class="lang-zh">去首页打开 →</span><span class="lang-ar" dir="rtl">افتح من الصفحة الرئيسية ←</span><span class="lang-hi">होमपेज पर खोलें →</span></a></p>
+    <p style="margin-top:18px"><a class="btn primary" href="/"><span class="lang-en">Open on the homepage →</span><span class="lang-zh">去首页打开 →</span><span class="lang-ar" dir="rtl">افتح من الصفحة الرئيسية ←</span><span class="lang-hi">होमपेज पर खोलें →</span></a></p>
   </section>
 </div>
 
 <div class="wrap">
   <article class="prose">
     <div class="lang-en">
-<p>You received a <code>.md</code> file from ChatGPT, a README from GitHub, or notes from a teammate — and you do not want to upload it to a random “online converter.” Fair. This guide explains what “open Markdown online” usually implies, how to open the file entirely in your browser, how local tools compare to upload converters, what PDF/Word export actually does on openmdfile.com, and when a desktop editor is still the better choice.</p>
+<p>You received a <code>.md</code> file from ChatGPT, a README from GitHub, or notes from a teammate — and you do not want to upload it to a random “online converter.” Fair. For OS-by-OS steps, see <a href="/how-to-open-md-file/">how to open an MD file</a> (also phrased as how to open a markdown file). This guide explains what “open Markdown online” usually implies, how to open the file entirely in your browser, how local tools compare to upload converters, what PDF/Word export actually does on openmdfile.com, and when a desktop editor is still the better choice.</p>
 
 <h2>What opening Markdown online usually means</h2>
 <p>Search for “open md file online” and you will find two very different products that look similar on the landing page:</p>
@@ -86,9 +81,9 @@
 <p>The marketing language overlaps (“free,” “online,” “no install”), so the honest question is not “is it a website?” but “does my file leave my computer?” If the answer is unclear in the privacy policy, assume upload until proven otherwise.</p>
 
 <h2>Open without uploading — browser-local steps</h2>
-<p>On <a href="../../index.html">openmdfile.com</a> the flow is intentionally short:</p>
+<p>On <a href="/">openmdfile.com</a> the flow is intentionally short:</p>
 <ol>
-<li>Open the <a href="../../index.html">homepage</a> (or this page’s sibling tools such as <a href="../../md-viewer/index.html">MD Viewer</a> / <a href="../../markdown-reader/index.html">Markdown Reader</a>).</li>
+<li>Open the <a href="/">homepage</a> (or this page’s sibling tools such as <a href="/md-viewer/">MD Viewer</a> / <a href="/markdown-reader/">Markdown Reader</a>).</li>
 <li>Drop a <code>.md</code>, <code>.markdown</code>, or <code>.txt</code> file into the drop zone, or click <strong>Choose file</strong>. You can also paste Markdown text or open a file from a URL you control.</li>
 <li>The page renders GitHub Flavored Markdown (GFM) as a readable document: headings, tables, task lists, fenced code with highlighting, and common extras such as diagrams and math when those libraries are loaded.</li>
 <li>Read it. If you need a shareable artifact, use the on-page <strong>PDF</strong> or <strong>Word</strong> export — still generated in the browser (see below). Soft limit: files up to <strong>10 MB</strong>.</li>
@@ -139,7 +134,7 @@
 </ul>
 <p>For “double-clicked a .md and Windows/macOS shrugged,” the browser path is usually faster than installing an editor for a one-off read. For daily writing, install the editor.</p>
 
-<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>Ready to try it?</strong> Open your file on the <a href="../../index.html">openmdfile homepage</a> — drop, preview, optional PDF/Word. Need HTML for the web instead of a reading view? That is what sister tool <a href="https://mdtohtml.app">mdtohtml.app</a> is for (convert/publish Markdown as HTML), not a substitute for private local preview here.</p>
+<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>Ready to try it?</strong> Open your file on the <a href="/">openmdfile homepage</a> — drop, preview, optional PDF/Word. Need HTML for the web instead of a reading view? That is what sister tool <a href="https://mdtohtml.app">mdtohtml.app</a> is for (convert/publish Markdown as HTML), not a substitute for private local preview here.</p>
 </div>
 
     <div class="lang-zh">
@@ -152,9 +147,9 @@
 </ul>
 <p>营销词都是“免费、在线、免安装”，真正该问的是：<strong>文件有没有离开我的电脑？</strong>隐私政策说不清时，先按上传来假设。</p>
 <h2>不上传打开——浏览器本地步骤</h2>
-<p>在 <a href="../../index.html">openmdfile.com</a> 流程很短：</p>
+<p>在 <a href="/">openmdfile.com</a> 流程很短：</p>
 <ol>
-<li>打开<a href="../../index.html">首页</a>（或 <a href="../../md-viewer/index.html">MD 查看器</a> / <a href="../../markdown-reader/index.html">Markdown 阅读器</a>）。</li>
+<li>打开<a href="/">首页</a>（或 <a href="/md-viewer/">MD 查看器</a> / <a href="/markdown-reader/">Markdown 阅读器</a>）。</li>
 <li>把 <code>.md</code> / <code>.markdown</code> / <code>.txt</code> 拖进放置区，或点<strong>选择文件</strong>。也可粘贴文本，或从你可控的 URL 打开。</li>
 <li>页面以 GitHub Flavored Markdown（GFM）渲染：标题、表格、任务列表、代码高亮，以及在库已加载时的图表与公式等。</li>
 <li>阅读即可。需要分享物时再用页内 <strong>PDF</strong> 或 <strong>Word</strong> 导出（见下节）。软限制：最大约 <strong>10 MB</strong>。</li>
@@ -193,7 +188,7 @@
 <li>超过约 10 MB 软限制，或根本不是纯 Markdown 的文件。</li>
 </ul>
 <p>只是“双击打不开、看一眼就走”——浏览器路径通常比为此装一个编辑器更快。日常写作请装桌面工具。</p>
-<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>现在就试？</strong>在 <a href="../../index.html">openmdfile 首页</a>打开文件。若需要把 Markdown 转成网页 HTML，请用姊妹工具 <a href="https://mdtohtml.app">mdtohtml.app</a>（转换/发布 HTML），它不能替代这里的本地私密预览。</p>
+<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>现在就试？</strong>在 <a href="/">openmdfile 首页</a>打开文件。若需要把 Markdown 转成网页 HTML，请用姊妹工具 <a href="https://mdtohtml.app">mdtohtml.app</a>（转换/发布 HTML），它不能替代这里的本地私密预览。</p>
 </div>
 
     <div class="lang-ar" dir="rtl">
@@ -206,7 +201,7 @@
 <p>السؤال الصادق: هل يغادر الملف جهازك؟ إن غمضت سياسة الخصوصية، افترض الرفع.</p>
 <h2>الفتح بلا رفع — خطوات محلية</h2>
 <ol>
-<li>افتح <a href="../../index.html">الصفحة الرئيسية</a>.</li>
+<li>افتح <a href="/">الصفحة الرئيسية</a>.</li>
 <li>أفلت <code>.md</code> / <code>.markdown</code> / <code>.txt</code> أو اختر ملفًا (أو الصق نصًا / افتح من رابط تتحكم به).</li>
 <li>يُعرض GFM كمستند قابل للقراءة.</li>
 <li>اقرأ؛ وعند الحاجة صدّر <strong>PDF</strong> أو <strong>Word</strong> من المتصفح. الحد المرن: نحو <strong>10 ميغابايت</strong>.</li>
@@ -231,7 +226,7 @@
 <p class="muted">نفس توجه خصوصية أدوات CCC Studio المحلية في المتصفح — ومنها عائلة pdf-to-markdown.</p>
 <h2>متى تستخدم محررًا مكتبيًا</h2>
 <p>للتحرير الطويل وGit والمشاريع متعددة الملفات والعمل دون اتصال من اللحظة الأولى، أو الملفات أكبر من ~10 ميغابايت. للقراءة السريعة لملف واحد، المتصفح يكفي.</p>
-<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>جرّب الآن:</strong> <a href="../../index.html">الصفحة الرئيسية</a>. لتحويل ماركداون إلى HTML للويب استخدم <a href="https://mdtohtml.app">mdtohtml.app</a> — أداة شقيقة مختلفة الغرض.</p>
+<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>جرّب الآن:</strong> <a href="/">الصفحة الرئيسية</a>. لتحويل ماركداون إلى HTML للويب استخدم <a href="https://mdtohtml.app">mdtohtml.app</a> — أداة شقيقة مختلفة الغرض.</p>
 </div>
 
     <div class="lang-hi">
@@ -244,7 +239,7 @@
 <p>ईमानदार सवाल: क्या फ़ाइल आपका कंप्यूटर छोड़ती है? नीति अस्पष्ट हो तो अपलोड मानें।</p>
 <h2>अपलोड के बिना खोलें — ब्राउज़र-लोकल कदम</h2>
 <ol>
-<li><a href="../../index.html">होमपेज</a> खोलें।</li>
+<li><a href="/">होमपेज</a> खोलें।</li>
 <li><code>.md</code> / <code>.markdown</code> / <code>.txt</code> ड्रॉप करें या फ़ाइल चुनें (टेक्स्ट पेस्ट / नियंत्रित URL भी)।</li>
 <li>GFM के रूप में पढ़ने योग्य दस्तावेज़ रेंडर होता है।</li>
 <li>पढ़ें; ज़रूरत हो तो ब्राउज़र में <strong>PDF</strong> या <strong>Word</strong>। नरम सीमा: लगभग <strong>10 MB</strong>।</li>
@@ -269,7 +264,7 @@
 <p class="muted">CCC Studio के अन्य ब्राउज़र-लोकल टूल (जैसे pdf-to-markdown परिवार) जैसी ही गोपनीयता मुद्रा।</p>
 <h2>डेस्कटॉप एडिटर कब उपयोग करें</h2>
 <p>लंबा संपादन, Git, मल्टी-फ़ाइल, पूरी तरह ऑफ़लाइन-पहले, या ~10 MB से बड़ी फ़ाइलें। एक बार पढ़ने के लिए ब्राउज़र तेज़ है।</p>
-<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>अभी आज़माएँ:</strong> <a href="../../index.html">होमपेज</a>। वेब HTML चाहिए तो बहन टूल <a href="https://mdtohtml.app">mdtohtml.app</a> — यहाँ की लोकल प्राइवेट प्रीव्यू का विकल्प नहीं।</p>
+<p style="margin:28px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:var(--bg-subtle)"><strong>अभी आज़माएँ:</strong> <a href="/">होमपेज</a>। वेब HTML चाहिए तो बहन टूल <a href="https://mdtohtml.app">mdtohtml.app</a> — यहाँ की लोकल प्राइवेट प्रीव्यू का विकल्प नहीं।</p>
 </div>
   </article>
 
@@ -293,42 +288,42 @@
 
   <h2 class="section-title">FAQ</h2>
   <div class="faq">
-    <details><summary><span class="lang-en">Do I need to install anything?</span><span class="lang-zh">需要安装软件吗？</span><span class="lang-ar" dir="rtl">هل أحتاج إلى تثبيت أي شيء؟</span><span class="lang-hi">क्या कुछ इंस्टॉल करना होगा?</span></summary>
-      <p class="lang-en">No. openmdfile.com runs in your browser. Once the page and its libraries have loaded, choosing a .md file reads it locally with the File API — nothing to install, nothing uploaded.</p><p class="lang-zh">不需要。页面与库加载后，选择 .md 即用浏览器 File API 本地读取——无需安装、不会上传。</p><p class="lang-ar" dir="rtl">لا. بعد تحميل الصفحة ومكتباتها، اختيار ملف .md يقرأه محليًا عبر File API — بلا تثبيت وبلا رفع.</p><p class="lang-hi">नहीं। पेज और लाइब्रेरी लोड होने के बाद .md चुनने पर File API से लोकल पढ़ा जाता है — इंस्टॉल नहीं, अपलोड नहीं।</p></details>
-    <details><summary><span class="lang-en">Does it support GitHub Flavored Markdown (GFM)?</span><span class="lang-zh">支持 GitHub Flavored Markdown（GFM）吗？</span><span class="lang-ar" dir="rtl">هل يدعم GitHub Flavored Markdown (GFM)؟</span><span class="lang-hi">क्या GitHub Flavored Markdown (GFM) सपोर्ट है?</span></summary>
-      <p class="lang-en">Yes. The viewer renders GFM including tables, task lists, fenced code with highlighting, strikethrough, and common extras such as Mermaid diagrams and KaTeX math when those libraries are on the page.</p><p class="lang-zh">支持。含表格、任务列表、代码高亮、删除线，以及页面已加载相应库时的 Mermaid 图与 KaTeX 公式等。</p><p class="lang-ar" dir="rtl">نعم. يشمل الجداول وقوائم المهام والتعليمات البرمجية المظللة والمخططات والرياضيات عند توفر المكتبات.</p><p class="lang-hi">हाँ। टेबल, टास्क लिस्ट, कोड हाइलाइट, तथा पेज पर लाइब्रेरी होने पर Mermaid/KaTeX आदि।</p></details>
-    <details><summary><span class="lang-en">How is this different from mdtohtml.app?</span><span class="lang-zh">和 mdtohtml.app 有什么区别？</span><span class="lang-ar" dir="rtl">ما الفرق عن mdtohtml.app؟</span><span class="lang-hi">mdtohtml.app से क्या अलग है?</span></summary>
-      <p class="lang-en">openmdfile.com is for opening, reading, and exporting .md as a document (preview, PDF, Word). mdtohtml.app is the sister tool for converting or publishing Markdown as HTML for the web. Use openmdfile to read; use mdtohtml when you need HTML output.</p><p class="lang-zh">openmdfile 用于打开、阅读并导出为文档（预览 / PDF / Word）。mdtohtml.app 是姊妹工具，把 Markdown 转成或发布为网页 HTML。阅读用前者，要 HTML 输出用后者。</p><p class="lang-ar" dir="rtl">openmdfile للقراءة والتصدير كمستند؛ mdtohtml.app أداة شقيقة لتحويل/نشر ماركداون كـ HTML للويب.</p><p class="lang-hi">openmdfile पढ़ने और दस्तावेज़ एक्सपोर्ट के लिए है; mdtohtml.app बहन टूल है — Markdown को वेब HTML में कन्वर्ट/पब्लिश करने के लिए।</p></details>
-    <details><summary><span class="lang-en">Do your servers log my Markdown file contents?</span><span class="lang-zh">你们的服务器会记录我的 Markdown 正文吗？</span><span class="lang-ar" dir="rtl">هل تسجّل خوادمكم محتوى ملف الماركداون؟</span><span class="lang-hi">क्या आपके सर्वर मेरी Markdown सामग्री लॉग करते हैं?</span></summary>
-      <p class="lang-en">No. File contents never leave your browser for preview or for PDF/Word export. We do not receive or store your document. Optional requests (CDN scripts, country hint for language, page analytics) do not include your Markdown text.</p><p class="lang-zh">不会。预览与 PDF/Word 导出时正文不离开浏览器；我们收不到、也不存储你的文档。CDN、语言国家提示、页面分析等可选请求都不包含 Markdown 正文。</p><p class="lang-ar" dir="rtl">لا. لا يغادر المحتوى متصفحك للمعاينة أو التصدير، ولا نستلم مستندك ولا نخزّنه.</p><p class="lang-hi">नहीं। प्रीव्यू या PDF/Word के लिए सामग्री ब्राउज़र नहीं छोड़ती; हम दस्तावेज़ प्राप्त या संग्रहित नहीं करते।</p></details>
-    <details><summary><span class="lang-en">What formats and size limits do you support?</span><span class="lang-zh">支持哪些格式与大小限制？</span><span class="lang-ar" dir="rtl">ما الصيغ وحدود الحجم المدعومة؟</span><span class="lang-hi">कौन से फ़ॉर्मैट और साइज़ सीमाएँ?</span></summary>
-      <p class="lang-en">Only <code>.md</code>, <code>.markdown</code>, and <code>.txt</code>. Soft cap about <strong>10&nbsp;MB</strong> — larger files belong in a desktop editor.</p><p class="lang-zh">仅 <code>.md</code>、<code>.markdown</code>、<code>.txt</code>。软限制约 <strong>10&nbsp;MB</strong>——更大文件请用桌面编辑器。</p><p class="lang-ar" dir="rtl">فقط <code>.md</code> و<code>.markdown</code> و<code>.txt</code>. حد مرن نحو <strong>10&nbsp;ميغابايت</strong> — للملفات الأكبر استخدم محررًا مكتبيًا.</p><p class="lang-hi">केवल <code>.md</code>, <code>.markdown</code>, और <code>.txt</code>। नरम सीमा लगभग <strong>10&nbsp;MB</strong> — बड़ी फ़ाइलें डेस्कटॉप एडिटर में खोलें।</p></details>
-    <details><summary><span class="lang-en">Does a local drop upload my document for preview or PDF/Word?</span><span class="lang-zh">本地拖放预览或导出 PDF/Word 会上传正文吗？</span><span class="lang-ar" dir="rtl">هل يرفع الإفلات المحلي المستند للمعاينة أو PDF/Word؟</span><span class="lang-hi">क्या लोकल ड्रॉप प्रीव्यू या PDF/Word के लिए दस्तावेज़ अपलोड करता है?</span></summary>
-      <p class="lang-en">No. Local drop uses the File API in your tab. Preview and PDF/Word export do <em>not</em> upload the document body to our servers.</p><p class="lang-zh">不会。本地拖放用浏览器 File API 在标签页内读取；预览与 PDF/Word 导出<strong>不会</strong>把文档正文上传到我们的服务器。</p><p class="lang-ar" dir="rtl">لا. الإفلات المحلي يستخدم File API في تبويبك. المعاينة وتصدير PDF/Word <em>لا</em> ترفع نص المستند إلى خوادمنا.</p><p class="lang-hi">नहीं। लोकल ड्रॉप आपके टैब में File API इस्तेमाल करता है। प्रीव्यू और PDF/Word एक्सपोर्ट दस्तावेज़ बॉडी हमारे सर्वर पर <em>अपलोड नहीं</em> करते।</p></details>
-    <details><summary><span class="lang-en">Is “Open from URL” a zero-network path?</span><span class="lang-zh">“从 URL 打开”是零网络路径吗？</span><span class="lang-ar" dir="rtl">هل «فتح من رابط» مسار بلا شبكة؟</span><span class="lang-hi">क्या “URL से खोलें” ज़ीरो-नेटवर्क पथ है?</span></summary>
-      <p class="lang-en">No. Your browser fetches the remote host you typed — that is not a zero-network path. Even for local files, CDN scripts and an optional geo language hint may still load; they do not include your Markdown text.</p><p class="lang-zh">不是。浏览器会请求你填写的远端主机——这不是零网络路径。即便本地文件，CDN 脚本与可选的 geo 语言提示仍可能加载；它们不包含你的 Markdown 正文。</p><p class="lang-ar" dir="rtl">لا. متصفحك يجلب المضيف البعيد الذي كتبته — ليس مسارًا بلا شبكة. حتى مع الملفات المحلية قد تُحمَّل سكربتات CDN وتلميح geo اختياري؛ ولا تتضمن نص الماركداون.</p><p class="lang-hi">नहीं। ब्राउज़र आपके लिखे रिमोट होस्ट को फ़ेच करता है — यह ज़ीरो-नेटवर्क पथ नहीं है। लोकल फ़ाइलों पर भी CDN स्क्रिप्ट और वैकल्पिक geo भाषा संकेत लोड हो सकते हैं; उनमें आपका Markdown टेक्स्ट नहीं होता।</p></details>
+    <details><summary>Do I need to install anything?</summary>
+      <p>No. openmdfile.com runs in your browser. Once the page and its libraries have loaded, choosing a .md file reads it locally with the File API — nothing to install, nothing uploaded.</p></details>
+    <details><summary>Does it support GitHub Flavored Markdown (GFM)?</summary>
+      <p>Yes. The viewer renders GFM including tables, task lists, fenced code with highlighting, strikethrough, and common extras such as Mermaid diagrams and KaTeX math when those libraries are on the page.</p></details>
+    <details><summary>How is this different from mdtohtml.app?</summary>
+      <p>openmdfile.com is for opening, reading, and exporting .md as a document (preview, PDF, Word). mdtohtml.app is the sister tool for converting or publishing Markdown as HTML for the web. Use openmdfile to read; use mdtohtml when you need HTML output.</p></details>
+    <details><summary>Do your servers log my Markdown file contents?</summary>
+      <p>No. File contents never leave your browser for preview or for PDF/Word export. We do not receive or store your document. Optional requests (CDN scripts, country hint for language, page analytics) do not include your Markdown text.</p></details>
+    <details><summary>What formats and size limits do you support?</summary>
+      <p>Only <code>.md</code>, <code>.markdown</code>, and <code>.txt</code>. Soft cap about <strong>10 MB</strong> — larger files belong in a desktop editor.</p></details>
+    <details><summary>Does a local drop upload my document for preview or PDF/Word?</summary>
+      <p>No. Local drop uses the File API in your tab. Preview and PDF/Word export do <em>not</em> upload the document body to our servers.</p></details>
+    <details><summary>Is “Open from URL” a zero-network path?</summary>
+      <p>No. Your browser fetches the remote host you typed — that is not a zero-network path. Even for local files, CDN scripts and an optional geo language hint may still load; they do not include your Markdown text.</p></details>
   </div>
 
 </div>
 
 <footer class="site">
   <div class="f-links">
-    <a href="../../md-viewer/index.html"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-    <a href="../../markdown-reader/index.html"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-    <a href="../../md-to-pdf/index.html"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-    <a href="../../md-to-word/index.html"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-    <a href="../../what-is-an-md-file/index.html"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-    <a href="../../how-to-open-md-file/index.html"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-    <a href="./index.html"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+    <a href="/md-viewer/"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
+    <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
+    <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
+    <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
+    <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
+    <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
+    <a href="/learn/open-markdown-without-uploading/"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
     <a href="https://mdtohtml.app">mdtohtml.app</a>
-    <a href="../../privacy/index.html"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私协议</span><span class="lang-ar" dir="rtl">سياسة الخصوصية</span><span class="lang-hi">गोपनीयता नीति</span></a>
-    <a href="../../terms/index.html"><span class="lang-en">Terms of Service</span><span class="lang-zh">服务条款</span><span class="lang-ar" dir="rtl">شروط الخدمة</span><span class="lang-hi">सेवा की शर्तें</span></a>
+    <a href="/privacy/"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私协议</span><span class="lang-ar" dir="rtl">سياسة الخصوصية</span><span class="lang-hi">गोपनीयता नीति</span></a>
+    <a href="/terms/"><span class="lang-en">Terms of Service</span><span class="lang-zh">服务条款</span><span class="lang-ar" dir="rtl">شروط الخدمة</span><span class="lang-hi">सेवा की शर्तें</span></a>
     <a href="mailto:support@openmdfile.com"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span><span class="lang-ar" dir="rtl">اتصل بنا</span><span class="lang-hi">संपर्क करें</span></a>
   </div>
   <div class="f-note"><span class="lang-en">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com</span><span class="lang-zh">© 2026 CCC Studio · openmdfile — 免费在线 Markdown 查看与阅读工具 · support@openmdfile.com</span><span class="lang-ar" dir="rtl">© 2026 CCC Studio · openmdfile — عارض وقارئ ماركداون مجاني عبر الإنترنت · support@openmdfile.com</span><span class="lang-hi">© 2026 CCC Studio · openmdfile — मुफ़्त ऑनलाइन मार्कडाउन व्यूअर और रीडर · support@openmdfile.com</span></div>
 </footer>
 
 </div><!-- /#page -->
-<script src="../../assets/app.js?v=cccf8c26"></script>
+<script src="../../assets/app.js?v=20261008c"></script>
 </body>
 </html>

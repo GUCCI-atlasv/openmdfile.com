@@ -1,0 +1,2 @@
+# Missing /assets/* → real 404 (never SPA index.html). Existing files are served first.
+/assets/*    /404.html   404
