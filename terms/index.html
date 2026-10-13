@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light" data-lang="en">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +15,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="zh_CN">
-<meta property="og:locale:alternate" content="ar_SA">
-<meta property="og:locale:alternate" content="hi_IN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Terms of Service | openmdfile">
 <meta name="twitter:description" content="Terms of service for openmdfile.com, a free in-browser markdown viewer operated by CCC Studio.">
 <meta name="twitter:image" content="https://openmdfile.com/assets/og.png">
-<link rel="stylesheet" href="../assets/style.css?v=20261007a">
-
-
+<link rel="stylesheet" href="../assets/style.css?v=20261013e">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://openmdfile.com/"}, {"@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://openmdfile.com/terms/"}]}</script>
 </head>
 <body>
 <div id="page">
@@ -33,18 +29,15 @@
   <div class="header-inner">
     <a class="logo" href="/"><span class="logo-badge">.MD</span>openmdfile</a>
     <nav class="site-nav">
-      <a href="/md-viewer/"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-      <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-      <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-      <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-      <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-      <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-          <a href="/learn/open-markdown-without-uploading/"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+      <a href="/md-viewer/">MD Viewer</a>
+      <a href="/markdown-reader/">Markdown Reader</a>
+      <a href="/md-to-pdf/">MD to PDF</a>
+      <a href="/md-to-word/">MD to Word</a>
+      <a href="/what-is-an-md-file/">What is .md?</a>
+      <a href="/how-to-open-md-file/">How to open</a>
+          <a href="/learn/open-markdown-without-uploading/">No upload</a>
     </nav>
     <div class="header-actions">
-      <div class="lang-wrap">
-        <button class="icon-btn" id="langBtn" onclick="toggleLangMenu(event)" title="Language / 语言 / اللغة / भाषा">English</button>
-      </div>
       <button class="icon-btn" onclick="toggleTheme()" title="Dark mode"><svg class="i"><use href="#ic-moon"/></svg></button>
     </div>
   </div>
@@ -52,16 +45,16 @@
 
 <div class="wrap">
   <section class="hero compact">
-    <span class="kicker"><span class="lang-en">Effective: July 16, 2026</span><span class="lang-zh">生效日期：2026 年 7 月 16 日</span><span class="lang-ar" dir="rtl">سارية اعتبارًا من: 16 يوليو 2026</span><span class="lang-hi">प्रभावी: 16 जुलाई 2026</span></span>
+    <span class="kicker">Effective: July 16, 2026</span>
     <h1 id="pageH1">Terms of Service</h1>
-    <p class="sub"><span class="lang-en">Plain terms for a simple tool.</span><span class="lang-zh">简单工具，条款也尽量简单。</span><span class="lang-ar" dir="rtl">شروط مبسّطة لأداة بسيطة.</span><span class="lang-hi">एक सरल टूल के लिए सरल शर्तें।</span></p>
+    <p class="sub">Plain terms for a simple tool.</p>
   </section>
 </div>
 
 <div class="wrap">
 
   <article class="prose">
-    <div class="lang-en"><h2>1. Acceptance</h2>
+    <h2>1. Acceptance</h2>
 <p>By using openmdfile.com ("the Service"), operated by <strong>CCC Studio</strong>, you agree to these Terms. If you do not agree, please do not use the Service.</p>
 <h2>2. The Service</h2>
 <p>The Service is a free, browser-based tool for viewing, reading and exporting Markdown files. Processing happens locally in your browser; see the <a href="/privacy/">Privacy Policy</a> for details. The Service is provided free of charge and without advertising.</p>
@@ -80,89 +73,30 @@
 <h2>9. Changes and termination</h2>
 <p>We may modify or discontinue the Service, or update these Terms, at any time. Continued use after changes constitutes acceptance.</p>
 <h2>10. Contact</h2>
-<p>Questions? Email <a href="mailto:support@openmdfile.com">support@openmdfile.com</a>.</p></div>
-    <div class="lang-zh"><h2>1. 条款接受</h2>
-<p>使用由 <strong>CCC Studio</strong> 运营的 openmdfile.com（下称“本服务”）即表示你同意本条款。若不同意，请勿使用本服务。</p>
-<h2>2. 服务内容</h2>
-<p>本服务是免费的浏览器端工具，用于查看、阅读并导出 Markdown 文件。处理在你的浏览器本地完成，详见<a href="/privacy/">隐私协议</a>。本服务免费提供，且无广告。</p>
-<h2>3. 你的内容</h2>
-<p>你对通过本服务打开的文件和文本保留全部权利。由于处理是本地进行的，我们不会接收、存储你的内容，也不主张任何权利。你须确保自己有权使用所打开的文件。</p>
-<h2>4. 合理使用</h2>
-<p>你同意不滥用本服务——包括试图破坏服务、进行滥用性抓取，或将其用于违反适用法律的用途。</p>
-<h2>5. 知识产权</h2>
-<p>本服务的设计、品牌与代码版权归 © 2026 CCC Studio 所有。服务使用的开源库遵循各自的许可证。“openmdfile” 名称及站点设计未经许可不得复制用于竞争性服务。</p>
-<h2>6. 免责声明</h2>
-<p>本服务按<strong>“现状”</strong>提供，不作任何明示或默示的保证（包括对特定用途适用性的保证）。渲染与导出效果可能因浏览器而异，重要文档请自行核验后再使用。</p>
-<h2>7. 责任限制</h2>
-<p>在法律允许的最大范围内，CCC Studio 不对因使用本服务而产生的任何间接、附带或后果性损失承担责任。</p>
-<h2>8. 第三方链接</h2>
-<p>本站包含指向第三方网站的链接（如 mdtohtml.app、CDN）。我们不对其内容或政策负责。</p>
-<h2>9. 变更与终止</h2>
-<p>我们可随时修改或停止本服务，或更新本条款。变更后继续使用即视为接受。</p>
-<h2>10. 联系我们</h2>
-<p>如有疑问，请发邮件至 <a href="mailto:support@openmdfile.com">support@openmdfile.com</a>。</p></div>
-    <div class="lang-ar" dir="rtl"><h2>1. القبول</h2>
-<p>باستخدامك موقع openmdfile.com («الخدمة») الذي تشغّله <strong>CCC Studio</strong>، فإنك توافق على هذه الشروط. وإن لم توافق فيرجى عدم استخدام الخدمة.</p>
-<h2>2. وصف الخدمة</h2>
-<p>الخدمة أداة مجانية تعمل في المتصفح لعرض ملفات ماركداون وقراءتها وتصديرها. وتجري المعالجة محليًا في متصفحك؛ راجع <a href="/privacy/">سياسة الخصوصية</a> للتفاصيل. وتُقدَّم الخدمة مجانًا وبلا إعلانات.</p>
-<h2>3. المحتوى الخاص بك</h2>
-<p>تحتفظ بكامل حقوقك في الملفات والنصوص التي تفتحها عبر الخدمة. ولأن المعالجة محلية، فإننا لا نستلم محتواك ولا نخزّنه ولا ندّعي أي حقوق عليه. وتقع على عاتقك مسؤولية التأكد من حقك في استخدام الملفات التي تفتحها.</p>
-<h2>4. الاستخدام المقبول</h2>
-<p>توافق على عدم إساءة استخدام الخدمة — بما في ذلك محاولة تعطيلها أو استخراج بياناتها بكميات مسيئة أو استخدامها بما يخالف القانون المعمول به.</p>
-<h2>5. الملكية الفكرية</h2>
-<p>تصميم الخدمة وهويتها وشيفرتها محفوظة © 2026 CCC Studio. وتظل المكتبات مفتوحة المصدر المستخدمة خاضعة لتراخيصها. ولا يجوز نسخ اسم «openmdfile» أو تصميم الموقع لخدمة منافسة دون إذن.</p>
-<h2>6. إخلاء الضمان</h2>
-<p>تُقدَّم الخدمة <strong>«كما هي»</strong> دون أي ضمانات صريحة أو ضمنية، بما في ذلك الملاءمة لغرض معين. وقد تختلف نتائج العرض والتصدير بين المتصفحات، لذا تحقّق من المستندات المهمة قبل الاعتماد عليها.</p>
-<h2>7. حدود المسؤولية</h2>
-<p>إلى أقصى حد يسمح به القانون، لا تتحمل CCC Studio أي مسؤولية عن أضرار غير مباشرة أو عرضية أو تبعية ناشئة عن استخدام الخدمة.</p>
-<h2>8. روابط الأطراف الثالثة</h2>
-<p>يتضمن الموقع روابط إلى مواقع خارجية (مثل mdtohtml.app وشبكات CDN)، ولسنا مسؤولين عن محتواها أو سياساتها.</p>
-<h2>9. التعديل والإنهاء</h2>
-<p>يجوز لنا تعديل الخدمة أو إيقافها أو تحديث هذه الشروط في أي وقت، ويُعد استمرارك في الاستخدام بعد التغيير قبولًا بها.</p>
-<h2>10. التواصل</h2>
-<p>لأي استفسار راسلنا على <a href="mailto:support@openmdfile.com">support@openmdfile.com</a>.</p></div>
-    <div class="lang-hi"><h2>1. स्वीकृति</h2>
-<p><strong>CCC Studio</strong> द्वारा संचालित openmdfile.com (“सेवा”) का उपयोग करके आप इन शर्तों से सहमत होते हैं। यदि आप सहमत नहीं हैं, तो कृपया सेवा का उपयोग न करें।</p>
-<h2>2. सेवा</h2>
-<p>यह सेवा Markdown फ़ाइलें देखने, पढ़ने और एक्सपोर्ट करने का एक मुफ़्त, ब्राउज़र-आधारित टूल है। प्रोसेसिंग आपके ब्राउज़र में लोकल होती है; विवरण के लिए <a href="/privacy/">गोपनीयता नीति</a> देखें। यह सेवा नि:शुल्क और विज्ञापन-रहित है।</p>
-<h2>3. आपकी सामग्री</h2>
-<p>सेवा से खोली गई फ़ाइलों और टेक्स्ट पर आपके सभी अधिकार बने रहते हैं। चूँकि प्रोसेसिंग लोकल है, हम आपकी सामग्री कभी प्राप्त या संग्रहीत नहीं करते और उस पर कोई अधिकार नहीं जताते। जिन फ़ाइलों को आप खोलते हैं, उनके उपयोग का अधिकार सुनिश्चित करना आपकी ज़िम्मेदारी है।</p>
-<h2>4. स्वीकार्य उपयोग</h2>
-<p>आप सेवा का दुरुपयोग न करने पर सहमत हैं — जिसमें इसे बाधित करने का प्रयास, अत्यधिक मात्रा में स्क्रैपिंग, या लागू क़ानून के उल्लंघन में उपयोग शामिल है।</p>
-<h2>5. बौद्धिक संपदा</h2>
-<p>सेवा का डिज़ाइन, ब्रांडिंग और कोड © 2026 CCC Studio है। सेवा द्वारा उपयोग की गई ओपन-सोर्स लाइब्रेरी अपने-अपने लाइसेंस के अधीन रहती हैं। बिना अनुमति “openmdfile” नाम और साइट डिज़ाइन को किसी प्रतिस्पर्धी सेवा के लिए कॉपी नहीं किया जा सकता।</p>
-<h2>6. वारंटी अस्वीकरण</h2>
-<p>सेवा <strong>“जैसी है”</strong> प्रदान की जाती है, बिना किसी स्पष्ट या निहित वारंटी के, जिसमें किसी विशेष उद्देश्य के लिए उपयुक्तता शामिल है। रेंडरिंग और एक्सपोर्ट परिणाम ब्राउज़र के अनुसार भिन्न हो सकते हैं; महत्वपूर्ण दस्तावेज़ों पर निर्भर होने से पहले उन्हें सत्यापित करें।</p>
-<h2>7. दायित्व की सीमा</h2>
-<p>क़ानून द्वारा अनुमत अधिकतम सीमा तक, CCC Studio सेवा के उपयोग से उत्पन्न किसी भी अप्रत्यक्ष, आकस्मिक या परिणामी क्षति के लिए उत्तरदायी नहीं होगा।</p>
-<h2>8. तृतीय-पक्ष लिंक</h2>
-<p>साइट तृतीय-पक्ष साइटों (जैसे mdtohtml.app, CDN) से लिंक करती है। हम उनकी सामग्री या नीतियों के लिए ज़िम्मेदार नहीं हैं।</p>
-<h2>9. परिवर्तन और समाप्ति</h2>
-<p>हम किसी भी समय सेवा को संशोधित या बंद कर सकते हैं, या इन शर्तों को अपडेट कर सकते हैं। परिवर्तनों के बाद उपयोग जारी रखना स्वीकृति माना जाएगा।</p>
-<h2>10. संपर्क</h2>
-<p>प्रश्न? <a href="mailto:support@openmdfile.com">support@openmdfile.com</a> पर ईमेल करें।</p></div>
+<p>Questions? Email <a href="mailto:support@openmdfile.com">support@openmdfile.com</a>.</p>
+
   </article>
 
 </div>
 
 <footer class="site">
   <div class="f-links">
-    <a href="/md-viewer/"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-    <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-    <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-    <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-    <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-    <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-    <a href="/learn/open-markdown-without-uploading/"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+    <a href="/md-viewer/">MD Viewer</a>
+    <a href="/markdown-reader/">Markdown Reader</a>
+    <a href="/md-to-pdf/">MD to PDF</a>
+    <a href="/md-to-word/">MD to Word</a>
+    <a href="/what-is-an-md-file/">What is .md?</a>
+    <a href="/how-to-open-md-file/">How to open</a>
+    <a href="/learn/open-markdown-without-uploading/">No upload</a>
     <a href="https://mdtohtml.app">mdtohtml.app</a>
-    <a href="/privacy/"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私协议</span><span class="lang-ar" dir="rtl">سياسة الخصوصية</span><span class="lang-hi">गोपनीयता नीति</span></a>
-    <a href="/terms/"><span class="lang-en">Terms of Service</span><span class="lang-zh">服务条款</span><span class="lang-ar" dir="rtl">شروط الخدمة</span><span class="lang-hi">सेवा की शर्तें</span></a>
-    <a href="mailto:support@openmdfile.com"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span><span class="lang-ar" dir="rtl">اتصل بنا</span><span class="lang-hi">संपर्क करें</span></a>
+    <a href="/privacy/">Privacy Policy</a>
+    <a href="/terms/">Terms of Service</a>
+    <a href="mailto:support@openmdfile.com">Contact</a>
   </div>
-  <div class="f-note"><span class="lang-en">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com</span><span class="lang-zh">© 2026 CCC Studio · openmdfile — 免费在线 Markdown 查看与阅读工具 · support@openmdfile.com</span><span class="lang-ar" dir="rtl">© 2026 CCC Studio · openmdfile — عارض وقارئ ماركداون مجاني عبر الإنترنت · support@openmdfile.com</span><span class="lang-hi">© 2026 CCC Studio · openmdfile — मुफ़्त ऑनलाइन मार्कडाउन व्यूअर और रीडर · support@openmdfile.com</span></div>
+  <div class="f-note">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com</div>
 </footer>
 
 </div><!-- /#page -->
-<script src="../assets/app.js?v=20261008c"></script>
+<script defer src="../assets/app.js?v=20261013e"></script>
 </body>
 </html>

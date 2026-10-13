@@ -4,6 +4,8 @@
  *    Pages keeps serving files removed from a deployment for ~7 days, so hard-404 them here.
  * 2) One-hop canonical: any www.openmdfile.com or http:// request → 301 https://openmdfile.com + path + query.
  *    (If the zone's "Always Use HTTPS" fires first at the edge, http:// is upgraded before this runs.)
+ * 3) The site is English-only; legacy ?lang= URLs 301 to the same path without that parameter
+ *    (folded into the same hop as rule 2).
  */
 const CANONICAL_HOST = 'openmdfile.com';
 
@@ -22,10 +24,15 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const host = url.hostname.toLowerCase();
 
-  if (host === 'www.' + CANONICAL_HOST || (host === CANONICAL_HOST && url.protocol === 'http:')) {
-    url.protocol = 'https:';
-    url.hostname = CANONICAL_HOST;
-    url.port = '';
+  const wrongHost = host === 'www.' + CANONICAL_HOST || (host === CANONICAL_HOST && url.protocol === 'http:');
+  const legacyLang = url.searchParams.has('lang');
+  if (wrongHost || legacyLang) {
+    if (wrongHost) {
+      url.protocol = 'https:';
+      url.hostname = CANONICAL_HOST;
+      url.port = '';
+    }
+    if (legacyLang) url.searchParams.delete('lang');
     return new Response(null, { status: 301, headers: { Location: url.toString(), 'Cache-Control': 'public, max-age=3600' } });
   }
 

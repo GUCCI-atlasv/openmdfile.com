@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light" data-lang="en">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,24 +15,18 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="zh_CN">
-<meta property="og:locale:alternate" content="ar_SA">
-<meta property="og:locale:alternate" content="hi_IN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MD Viewer — View Markdown Files Online Free | openmdfile">
 <meta name="twitter:description" content="Free online MD viewer. View any .md or markdown file in your browser with tables, code highlighting, Mermaid diagrams and math. No upload, no sign-up.">
 <meta name="twitter:image" content="https://openmdfile.com/assets/og.png">
-<link rel="stylesheet" href="../assets/style.css?v=20261007a">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<link rel="stylesheet" href="../assets/style.css?v=20261013e">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" disabled>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does this MD viewer work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The viewer is fully responsive and works in any modern mobile browser — open the page, tap Choose file, and read."}}, {"@type": "Question", "name": "Which Markdown features are supported?", "acceptedAnswer": {"@type": "Answer", "text": "GitHub-flavored Markdown: headings, tables, task lists, strikethrough, fenced code with syntax highlighting, images, plus Mermaid diagrams and KaTeX math."}}, {"@type": "Question", "name": "Is there a file size limit?", "acceptedAnswer": {"@type": "Answer", "text": "Files up to 10 MB are supported, which covers virtually every real-world markdown document."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "MD Viewer — openmdfile", "url": "https://openmdfile.com/md-viewer/", "description": "View Markdown files online with tables, code highlighting, diagrams and math, right in your browser. No upload, no sign-up.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (runs in a web browser)", "browserRequirements": "Requires JavaScript", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "CCC Studio"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://openmdfile.com/"}, {"@type": "ListItem", "position": 2, "name": "MD Viewer", "item": "https://openmdfile.com/md-viewer/"}]}</script>
 </head>
 <body data-embed="1">
 <div id="page">
@@ -41,18 +35,15 @@
   <div class="header-inner">
     <a class="logo" href="/"><span class="logo-badge">.MD</span>openmdfile</a>
     <nav class="site-nav">
-      <a href="/md-viewer/" class="on"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-      <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-      <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-      <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-      <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-      <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-          <a href="/learn/open-markdown-without-uploading/"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+      <a href="/md-viewer/" class="on">MD Viewer</a>
+      <a href="/markdown-reader/">Markdown Reader</a>
+      <a href="/md-to-pdf/">MD to PDF</a>
+      <a href="/md-to-word/">MD to Word</a>
+      <a href="/what-is-an-md-file/">What is .md?</a>
+      <a href="/how-to-open-md-file/">How to open</a>
+          <a href="/learn/open-markdown-without-uploading/">No upload</a>
     </nav>
     <div class="header-actions">
-      <div class="lang-wrap">
-        <button class="icon-btn" id="langBtn" onclick="toggleLangMenu(event)" title="Language / 语言 / اللغة / भाषा">English</button>
-      </div>
       <button class="icon-btn" onclick="toggleTheme()" title="Dark mode"><svg class="i"><use href="#ic-moon"/></svg></button>
     </div>
   </div>
@@ -60,21 +51,21 @@
 
 <div class="wrap">
   <section class="hero compact">
-    <span class="kicker"><span class="lang-en">Free online MD viewer · No upload</span><span class="lang-zh">免费在线 MD 查看器 · 不上传</span><span class="lang-ar" dir="rtl">عارض MD مجاني عبر الإنترنت · بلا رفع</span><span class="lang-hi">मुफ़्त ऑनलाइन MD व्यूअर · कोई अपलोड नहीं</span></span>
+    <span class="kicker">Free online MD viewer · No upload</span>
     <h1 id="pageH1">MD Viewer — view <em>Markdown</em> files online</h1>
-    <p class="sub"><span class="lang-en">A live viewer is already running below — drop your own .md file on it and it renders: tables, code, diagrams and all.</span><span class="lang-zh">下方就是一个正在运行的查看器——把你的 .md 文件拖上去即刻渲染：表格、代码、图表一应俱全。</span><span class="lang-ar" dir="rtl">يوجد عارض يعمل بالفعل في الأسفل — أفلت ملف .md الخاص بك عليه ليُعرض فورًا: الجداول والشيفرة والمخططات وكل شيء.</span><span class="lang-hi">नीचे एक चालू व्यूअर पहले से मौजूद है — अपनी .md फ़ाइल उस पर छोड़ें और वह तुरंत रेंडर हो जाएगी: टेबल, कोड, डायग्राम सब कुछ।</span></p>
+    <p class="sub">A live viewer is already running below — drop your own .md file on it and it renders: tables, code, diagrams and all.</p>
   </section>
 </div>
 <div class="tool-full">  <div class="dropzone compact" id="dropzone" onclick="document.getElementById('fileInput').click()">
     <div class="dz-icon"><svg class="i"><use href="#ic-drop"/></svg></div>
     <div class="dz-text">
-      <h2><span class="lang-en">Drop your own .md file here</span><span class="lang-zh">把你的 .md 文件拖到这里</span><span class="lang-ar" dir="rtl">أفلت ملف .md الخاص بك هنا</span><span class="lang-hi">अपनी .md फ़ाइल यहाँ छोड़ें</span></h2>
-      <p><span class="lang-en">Replaces the sample below — nothing is ever uploaded</span><span class="lang-zh">将替换下方的示例文档——文件绝不上传</span><span class="lang-ar" dir="rtl">سيحل محل النموذج أدناه — لا يُرفع أي شيء إطلاقًا</span><span class="lang-hi">नीचे दिए नमूने की जगह लेगी — कुछ भी अपलोड नहीं होता</span></p>
+      <h2>Drop your own .md file here</h2>
+      <p>Replaces the sample below — nothing is ever uploaded</p>
     </div>
     <div class="dz-actions">
-      <button class="btn primary" onclick="event.stopPropagation();document.getElementById('fileInput').click()"><svg class="i"><use href="#ic-file"/></svg> <span class="lang-en">Choose file</span><span class="lang-zh">选择文件</span><span class="lang-ar" dir="rtl">اختر ملفًا</span><span class="lang-hi">फ़ाइल चुनें</span></button>
-      <button class="btn" onclick="event.stopPropagation();openModal('paste')"><svg class="i"><use href="#ic-pen"/></svg> <span class="lang-en">Paste text</span><span class="lang-zh">粘贴文本</span><span class="lang-ar" dir="rtl">الصق نصًا</span><span class="lang-hi">टेक्स्ट पेस्ट करें</span></button>
-      <button class="btn" onclick="event.stopPropagation();openModal('url')"><svg class="i"><use href="#ic-link"/></svg> <span class="lang-en">Open from URL</span><span class="lang-zh">从链接打开</span><span class="lang-ar" dir="rtl">افتح من رابط</span><span class="lang-hi">URL से खोलें</span></button>
+      <button class="btn primary" onclick="event.stopPropagation();document.getElementById('fileInput').click()"><svg class="i"><use href="#ic-file"/></svg> Choose file</button>
+      <button class="btn" onclick="event.stopPropagation();openModal('paste')"><svg class="i"><use href="#ic-pen"/></svg> Paste text</button>
+      <button class="btn" onclick="event.stopPropagation();openModal('url')"><svg class="i"><use href="#ic-link"/></svg> Open from URL</button>
     </div>
   </div>
   <input type="file" id="fileInput" accept=".md,.markdown,.txt" multiple hidden>
@@ -82,7 +73,7 @@
 <div class="wrap">
 
   <article class="prose">
-    <div class="lang-en"><h2>A markdown viewer that just works</h2>
+    <h2>A markdown viewer that just works</h2>
 <p>This free <strong>md viewer</strong> renders GitHub-flavored Markdown exactly the way it was meant to look: headings become headings, tables become tables, task lists get real checkboxes, and code blocks get syntax highlighting. It also renders <strong>Mermaid diagrams</strong> and <strong>LaTeX formulas</strong>, which plain viewers usually skip — important now that ChatGPT and Claude routinely include both in their output.</p>
 <h2>Why an online viewer?</h2>
 <p>If you need step-by-step device instructions, see <a href="/how-to-open-md-file/">how to open an MD file</a> on Windows, Mac, iPhone, and Android. Windows and macOS have no built-in app associated with the <code>.md</code> extension, so double-clicking usually opens a wall of raw text — or nothing at all. Installing a code editor just to read one file is overkill. An <strong>md viewer online</strong> means: open the browser, drop the file, done. Nothing to install, nothing to configure, works the same on desktop and phone.</p>
@@ -91,37 +82,8 @@
 <h2>How to use</h2>
 <ol><li>Drag your <code>.md</code>, <code>.markdown</code> or <code>.txt</code> file onto the viewer above (or click <em>Choose file</em>) — it replaces the sample document.</li>
 <li>Read it as a clean document, with a table of contents, dark mode and adjustable text size.</li>
-<li>Optionally export to <a href="/md-to-pdf/">PDF</a> or <a href="/md-to-word/">Word</a>, or copy rich text into any app.</li></ol></div>
-    <div class="lang-zh"><h2>一个“拿来就能用”的 Markdown 查看器</h2>
-<p>这个免费的 <strong>MD 查看器</strong>按照 Markdown 应有的样子完整渲染 GFM：标题是标题、表格是表格、任务列表有真实的勾选框、代码块带语法高亮。它还支持 <strong>Mermaid 图表</strong>和 <strong>LaTeX 公式</strong>——普通查看器往往不支持，而 ChatGPT、Claude 的输出里这两样越来越常见。</p>
-<h2>为什么用在线查看器？</h2>
-<p>Windows 和 macOS 都没有默认关联 <code>.md</code> 扩展名的应用，双击通常只会看到一堆源码文本，甚至打不开。为了看一个文件去装一个代码编辑器太重了。<strong>在线 MD 查看器</strong>意味着：打开浏览器、拖入文件、完成。无需安装配置，电脑和手机体验一致。</p>
-<h2>隐私优先</h2>
-<p>与许多“在线查看器”不同，本页面从不上传你的文件。所有解析由浏览器本地 JavaScript 完成，关掉标签页即不留痕迹。</p>
-<h2>使用方法</h2>
-<ol><li>把 <code>.md</code>、<code>.markdown</code> 或 <code>.txt</code> 文件拖到上方查看器上（或点击“选择文件”）——会立即替换示例文档。</li>
-<li>以干净的文档形式阅读，支持目录、暗色模式与字号调节。</li>
-<li>需要时可导出 <a href="/md-to-pdf/">PDF</a>、<a href="/md-to-word/">Word</a>，或复制富文本到任意应用。</li></ol></div>
-    <div class="lang-ar" dir="rtl"><h2>عارض ماركداون يعمل ببساطة</h2>
-<p>يعرض <strong>عارض MD</strong> المجاني هذا صيغة GitHub-flavored Markdown كما يجب أن تظهر تمامًا: العناوين تصبح عناوين، والجداول جداول، وقوائم المهام تحصل على مربعات اختيار حقيقية، وكتل الشيفرة تُميَّز بالألوان. كما يعرض <strong>مخططات Mermaid</strong> و<strong>معادلات LaTeX</strong>، وهو ما تتجاهله العارضات البسيطة عادةً — وهذا مهم اليوم لأن ChatGPT وClaude يضمّنان كليهما بانتظام في مخرجاتهما.</p>
-<h2>لماذا عارض عبر الإنترنت؟</h2>
-<p>لا يتضمن نظاما Windows وmacOS أي تطبيق مرتبط بامتداد <code>.md</code>، لذا فإن النقر المزدوج يفتح عادةً جدارًا من النص الخام — أو لا يفتح شيئًا. وتثبيت محرر شيفرة كامل لقراءة ملف واحد مبالغة. <strong>العارض عبر الإنترنت</strong> يعني: افتح المتصفح، أفلت الملف، انتهى الأمر. بلا تثبيت وبلا إعدادات، وبالتجربة نفسها على الحاسوب والهاتف.</p>
-<h2>الخصوصية من التصميم</h2>
-<p>على خلاف كثير من «العارضات عبر الإنترنت»، لا ترفع هذه الصفحة ملفك أبدًا. تتم المعالجة كلها محليًا في متصفحك عبر JavaScript، وبإغلاق التبويب لا يبقى أي أثر.</p>
-<h2>طريقة الاستخدام</h2>
-<ol><li>اسحب ملف <code>.md</code> أو <code>.markdown</code> أو <code>.txt</code> إلى العارض أعلاه (أو اضغط «اختر ملفًا») — ليحل فورًا محل المستند النموذجي.</li>
-<li>اقرأه كمستند نظيف مع فهرس جانبي ووضع داكن وحجم نص قابل للتعديل.</li>
-<li>ويمكنك التصدير إلى <a href="/md-to-pdf/">PDF</a> أو <a href="/md-to-word/">Word</a>، أو نسخ نص منسق إلى أي تطبيق.</li></ol></div>
-    <div class="lang-hi"><h2>एक Markdown व्यूअर जो बस काम करता है</h2>
-<p>यह मुफ़्त <strong>MD व्यूअर</strong> GitHub-flavored Markdown को ठीक वैसे ही दिखाता है जैसा उसे दिखना चाहिए: हेडिंग हेडिंग बनती है, टेबल टेबल, टास्क लिस्ट में असली चेकबॉक्स आते हैं, और कोड ब्लॉक में सिंटैक्स हाइलाइटिंग होती है। यह <strong>Mermaid डायग्राम</strong> और <strong>LaTeX सूत्र</strong> भी रेंडर करता है, जिन्हें साधारण व्यूअर छोड़ देते हैं — और यह आज ज़रूरी है क्योंकि ChatGPT और Claude अपने आउटपुट में दोनों नियमित रूप से शामिल करते हैं।</p>
-<h2>ऑनलाइन व्यूअर क्यों?</h2>
-<p>Windows और macOS में <code>.md</code> एक्सटेंशन से जुड़ा कोई डिफ़ॉल्ट ऐप नहीं है, इसलिए डबल-क्लिक करने पर आमतौर पर कच्चा टेक्स्ट दिखता है — या कुछ भी नहीं खुलता। सिर्फ़ एक फ़ाइल पढ़ने के लिए कोड एडिटर इंस्टॉल करना ज़्यादती है। <strong>ऑनलाइन MD व्यूअर</strong> का मतलब है: ब्राउज़र खोलें, फ़ाइल छोड़ें, हो गया। न इंस्टॉल, न कॉन्फ़िगरेशन, और डेस्कटॉप व फ़ोन दोनों पर एक जैसा अनुभव।</p>
-<h2>डिज़ाइन से ही निजी</h2>
-<p>कई “ऑनलाइन व्यूअर” के विपरीत, यह पेज आपकी फ़ाइल कभी अपलोड नहीं करता। सारी पार्सिंग आपके ब्राउज़र में JavaScript से होती है। टैब बंद करते ही कुछ भी शेष नहीं रहता।</p>
-<h2>उपयोग कैसे करें</h2>
-<ol><li>अपनी <code>.md</code>, <code>.markdown</code> या <code>.txt</code> फ़ाइल ऊपर व्यूअर पर खींचें (या “फ़ाइल चुनें” दबाएँ) — यह तुरंत नमूना दस्तावेज़ की जगह ले लेगी।</li>
-<li>इसे साफ़ दस्तावेज़ की तरह पढ़ें — विषय-सूची, डार्क मोड और टेक्स्ट आकार नियंत्रण के साथ।</li>
-<li>चाहें तो <a href="/md-to-pdf/">PDF</a> या <a href="/md-to-word/">Word</a> में एक्सपोर्ट करें, या रिच टेक्स्ट किसी भी ऐप में कॉपी करें।</li></ol></div>
+<li>Optionally export to <a href="/md-to-pdf/">PDF</a> or <a href="/md-to-word/">Word</a>, or copy rich text into any app.</li></ol>
+
   </article>
 
   <h2 class="section-title">FAQ</h2>
@@ -137,22 +99,22 @@
 
 <footer class="site">
   <div class="f-links">
-    <a href="/md-viewer/"><span class="lang-en">MD Viewer</span><span class="lang-zh">MD 查看器</span><span class="lang-ar" dir="rtl">عارض MD</span><span class="lang-hi">MD व्यूअर</span></a>
-    <a href="/markdown-reader/"><span class="lang-en">Markdown Reader</span><span class="lang-zh">Markdown 阅读器</span><span class="lang-ar" dir="rtl">قارئ ماركداون</span><span class="lang-hi">मार्कडाउन रीडर</span></a>
-    <a href="/md-to-pdf/"><span class="lang-en">MD to PDF</span><span class="lang-zh">MD 转 PDF</span><span class="lang-ar" dir="rtl">MD إلى PDF</span><span class="lang-hi">MD से PDF</span></a>
-    <a href="/md-to-word/"><span class="lang-en">MD to Word</span><span class="lang-zh">MD 转 Word</span><span class="lang-ar" dir="rtl">MD إلى Word</span><span class="lang-hi">MD से Word</span></a>
-    <a href="/what-is-an-md-file/"><span class="lang-en">What is .md?</span><span class="lang-zh">什么是 .md</span><span class="lang-ar" dir="rtl">ما هو ملف .md؟</span><span class="lang-hi">.md क्या है?</span></a>
-    <a href="/how-to-open-md-file/"><span class="lang-en">How to open</span><span class="lang-zh">如何打开</span><span class="lang-ar" dir="rtl">طريقة الفتح</span><span class="lang-hi">कैसे खोलें</span></a>
-    <a href="/learn/open-markdown-without-uploading/"><span class="lang-en">No upload</span><span class="lang-zh">免上传</span><span class="lang-ar" dir="rtl">بلا رفع</span><span class="lang-hi">बिना अपलोड</span></a>
+    <a href="/md-viewer/">MD Viewer</a>
+    <a href="/markdown-reader/">Markdown Reader</a>
+    <a href="/md-to-pdf/">MD to PDF</a>
+    <a href="/md-to-word/">MD to Word</a>
+    <a href="/what-is-an-md-file/">What is .md?</a>
+    <a href="/how-to-open-md-file/">How to open</a>
+    <a href="/learn/open-markdown-without-uploading/">No upload</a>
     <a href="https://mdtohtml.app">mdtohtml.app</a>
-    <a href="/privacy/"><span class="lang-en">Privacy Policy</span><span class="lang-zh">隐私协议</span><span class="lang-ar" dir="rtl">سياسة الخصوصية</span><span class="lang-hi">गोपनीयता नीति</span></a>
-    <a href="/terms/"><span class="lang-en">Terms of Service</span><span class="lang-zh">服务条款</span><span class="lang-ar" dir="rtl">شروط الخدمة</span><span class="lang-hi">सेवा की शर्तें</span></a>
-    <a href="mailto:support@openmdfile.com"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span><span class="lang-ar" dir="rtl">اتصل بنا</span><span class="lang-hi">संपर्क करें</span></a>
+    <a href="/privacy/">Privacy Policy</a>
+    <a href="/terms/">Terms of Service</a>
+    <a href="mailto:support@openmdfile.com">Contact</a>
   </div>
-  <div class="f-note"><span class="lang-en">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com</span><span class="lang-zh">© 2026 CCC Studio · openmdfile — 免费在线 Markdown 查看与阅读工具 · support@openmdfile.com</span><span class="lang-ar" dir="rtl">© 2026 CCC Studio · openmdfile — عارض وقارئ ماركداون مجاني عبر الإنترنت · support@openmdfile.com</span><span class="lang-hi">© 2026 CCC Studio · openmdfile — मुफ़्त ऑनलाइन मार्कडाउन व्यूअर और रीडर · support@openmdfile.com</span></div>
+  <div class="f-note">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com</div>
 </footer>
 
 </div><!-- /#page -->
-<script src="../assets/app.js?v=20261008c"></script>
+<script defer src="../assets/app.js?v=20261013e"></script>
 </body>
 </html>

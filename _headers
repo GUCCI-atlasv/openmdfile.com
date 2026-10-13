@@ -4,10 +4,6 @@
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate
 
-# Country lookup must never be cached (per-visitor value)
-/geo
-  Cache-Control: no-store
-
 # Plain-text AI/crawler map — never HTML
 /llms.txt
   Content-Type: text/plain; charset=utf-8

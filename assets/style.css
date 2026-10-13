@@ -29,57 +29,8 @@ body{font-family:var(--font-sans);font-size:14px;background:var(--bg);color:var(
 button{font-family:inherit;cursor:pointer}
 svg.i{width:1.1em;height:1.1em;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.17em}
 
-/* ============ i18n visibility (en / zh / ar / hi) ============ */
-[data-lang="en"] .lang-zh,[data-lang="en"] .lang-ar,[data-lang="en"] .lang-hi{display:none!important}
-[data-lang="zh"] .lang-en,[data-lang="zh"] .lang-ar,[data-lang="zh"] .lang-hi{display:none!important}
-[data-lang="ar"] .lang-en,[data-lang="ar"] .lang-zh,[data-lang="ar"] .lang-hi{display:none!important}
-[data-lang="hi"] .lang-en,[data-lang="hi"] .lang-zh,[data-lang="hi"] .lang-ar{display:none!important}
-[data-lang="ar"]{--doc-size:17px}
-[data-lang="hi"]{--doc-size:16.5px}
-[data-lang="ar"] body,[data-lang="hi"] body{line-height:1.75}
-/* Arabic & Devanagari: no tight tracking, roomier lines */
-[data-lang="ar"] .hero h1,[data-lang="hi"] .hero h1,
-[data-lang="ar"] .dropzone h2,[data-lang="hi"] .dropzone h2,[data-lang="ar"] .dropzone .dz-title,[data-lang="hi"] .dropzone .dz-title,
-[data-lang="ar"] .feature h3,[data-lang="hi"] .feature h3,
-[data-lang="ar"] .prose h2,[data-lang="hi"] .prose h2,
-[data-lang="ar"] .prose h3,[data-lang="hi"] .prose h3{letter-spacing:0}
-[data-lang="ar"] .hero h1,[data-lang="hi"] .hero h1{line-height:1.35}
-[data-lang="ar"] .prose,[data-lang="hi"] .prose{line-height:1.9}
-[data-lang="ar"] .feature p,[data-lang="hi"] .feature p{line-height:1.7}
-/* latin runs inside RTL/Devanagari text keep their own direction */
-.logo,.logo-badge,.hero h1 em,.formats,.tab,code,.lang-menu .code{unicode-bidi:isolate}
-
-/* language menu */
-.lang-wrap{position:relative}
-.lang-menu{position:absolute;right:0;top:40px;min-width:158px;background:var(--surface);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:5px;display:none;z-index:80}
-.lang-menu.open{display:block}
-.lang-menu button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;background:none;border:none;color:var(--text-2);font-size:13px;font-weight:500;padding:9px 11px;border-radius:var(--r);text-align:left;white-space:nowrap}
-.lang-menu button:hover{background:var(--bg-subtle);color:var(--text)}
-.lang-menu button.on{background:var(--accent);color:#000;font-weight:700}
-.lang-menu button[lang="ar"]{direction:rtl;text-align:right}
-#langBtn{gap:6px;padding:0 11px;font-weight:600}
-#langBtn span{white-space:nowrap}
-@media(max-width:520px){#langBtn span{display:none}#langBtn{padding:0 8px}}
-html[dir="rtl"] .lang-menu{right:auto;left:0}
-html[dir="rtl"] .lang-menu button{text-align:right}
-
-/* ============ RTL adjustments ============ */
-html[dir="rtl"] .prose ul,html[dir="rtl"] .prose ol{padding-left:0;padding-right:1.4em}
-html[dir="rtl"] #doc ul,html[dir="rtl"] #doc ol{padding-left:0;padding-right:1.5em}
-html[dir="rtl"] #doc li.task-item{margin-left:0;margin-right:-1.5em}
-html[dir="rtl"] #doc blockquote{border-left:none;border-right:3px solid var(--accent);border-radius:var(--r) 0 0 var(--r)}
-html[dir="rtl"] .prose th,html[dir="rtl"] .prose td,html[dir="rtl"] #doc th,html[dir="rtl"] #doc td{text-align:right}
-html[dir="rtl"] #toc a.h2{padding-left:9px;padding-right:20px}
-html[dir="rtl"] #toc a.h3{padding-left:9px;padding-right:32px}
-html[dir="rtl"] .toolbar .spacer{flex:1}
-html[dir="rtl"] .prose a,html[dir="rtl"] #doc a{border-bottom-width:2px}
-html[dir="rtl"] #progress{left:auto;right:0}
-/* code, pre and math stay LTR regardless of page direction */
+/* code, pre and math stay LTR even inside RTL documents */
 #doc pre,#doc code,.prose pre,.prose code,.pdf-doc pre,.pdf-doc code,#doc .mermaid,#doc .katex{direction:ltr;text-align:left;unicode-bidi:isolate}
-@media(max-width:960px){
-  html[dir="rtl"] aside#toc{left:auto;right:0;border-right:none;border-left:1px solid var(--border);transform:translateX(100%);padding-left:8px;padding-right:14px}
-  html[dir="rtl"] aside#toc.open{transform:translateX(0)}
-}
 
 /* soft backdrop (soba-back style) */
 body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
@@ -325,8 +276,6 @@ html[data-embed="1"][data-split="1"] article#doc{max-width:860px;margin:0 auto}
 html[data-embed="1"][data-split="1"] .pane-body{padding-bottom:8px}
 html[data-embed="1"] .pane-src{border-right:none;border-radius:0 0 0 14px}
 html[data-embed="1"] .pane-doc{border-left:1px solid var(--border);border-radius:0 0 14px 0}
-html[data-embed="1"][dir="rtl"] .pane-src{border-radius:0 0 14px 0}
-html[data-embed="1"][dir="rtl"] .pane-doc{border-radius:0 0 0 14px}
 html[data-embed="1"] .toolbar .icon-btn[title="Back"]{display:none}
 /* single-column (Read / Preview mode): no height cap at all —
    the document flows to its natural length and the page scrolls. */
@@ -388,11 +337,9 @@ html[data-embed="1"][data-split="0"] aside#toc{display:none}
 .cmp-body.out th{background:var(--bg-subtle);color:var(--text);font-weight:600}
 .cmp-arrow{align-self:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#000;
   display:flex;align-items:center;justify-content:center;flex-shrink:0}
-html[dir="rtl"] .cmp-arrow svg{transform:scaleX(-1)}
 @media(max-width:820px){
   .cmp{grid-template-columns:1fr;gap:10px}
   .cmp-arrow{transform:rotate(90deg);margin:0 auto}
-  html[dir="rtl"] .cmp-arrow svg{transform:none}
   .cmp-body{max-height:220px}
 }
 

@@ -1,466 +1,51 @@
 /* openmdfile · app.js  © 2026 CCC Studio
-   Shared: i18n, theme, SVG sprite, viewer (open/render/export). */
+   Shared: theme, SVG sprite, viewer (open/render/export). */
 (function(){
 'use strict';
 var $=function(s){return document.querySelector(s)};
 
-/* ================= i18n ================= */
-var JT={
- en:{sizes:['Small','Medium','Large'],size:'Text size: ',over:'is over 10 MB',notmd:'is not a Markdown file',
-     binary:'looks like a binary file',nothing:'Nothing to render',url:'Enter a URL',fetching:'Fetching…',
-     fetchfail:'Could not fetch that URL (CORS or network). Try a raw.githubusercontent.com link.',
-     copied:'Copied — paste into Word, Google Docs, or email',clipfail:'Clipboard blocked — try Ctrl/Cmd+C after selecting',
-     word:'Word document downloaded',clip:'Rendered from clipboard',
-     imgmiss:"Image not found — relative paths can't load from a single file",by:'rendered by openmdfile',
-     pdfgen:'Generating PDF…',pdfok:'PDF downloaded',copysrc:'Markdown source copied',pdffail:'PDF export failed — use the print button instead'},
- zh:{sizes:['小','中','大'],size:'字号：',over:'超过 10 MB',notmd:'不是 Markdown 文件',
-     binary:'疑似二进制文件，无法渲染',nothing:'没有可渲染的内容',url:'请输入链接',fetching:'获取中…',
-     fetchfail:'无法获取该链接（跨域或网络问题），请改用 raw.githubusercontent.com 直链',
-     copied:'已复制——可直接粘贴到 Word / Google Docs / 邮件',clipfail:'剪贴板被拦截——请选中内容后 Ctrl/Cmd+C',
-     word:'Word 文档已下载',clip:'已渲染剪贴板内容',
-     imgmiss:'图片未找到——单文件无法加载相对路径图片',by:'由 openmdfile 渲染',
-     pdfgen:'正在生成 PDF…',pdfok:'PDF 已下载',copysrc:'已复制 Markdown 源码',pdffail:'PDF 生成失败——请改用打印按钮'},
- ar:{sizes:['صغير','متوسط','كبير'],size:'حجم النص: ',over:'يتجاوز 10 ميغابايت',notmd:'ليس ملف ماركداون',
-     binary:'يبدو أنه ملف ثنائي',nothing:'لا يوجد محتوى للعرض',url:'أدخل رابطًا',fetching:'جارٍ الجلب…',
-     fetchfail:'تعذّر جلب الرابط (قيود CORS أو الشبكة). جرّب رابط raw.githubusercontent.com',
-     copied:'تم النسخ — الصقه في Word أو Google Docs أو البريد',clipfail:'تم حظر الحافظة — حدّد المحتوى ثم اضغط Ctrl/Cmd+C',
-     word:'تم تنزيل مستند Word',clip:'تم العرض من الحافظة',
-     imgmiss:'الصورة غير موجودة — لا يمكن تحميل المسارات النسبية من ملف واحد',by:'معروض بواسطة openmdfile',
-     pdfgen:'جارٍ إنشاء PDF…',pdfok:'تم تنزيل ملف PDF',copysrc:'تم نسخ شيفرة ماركداون',pdffail:'تعذّر إنشاء PDF — استخدم زر الطباعة'},
- hi:{sizes:['छोटा','मध्यम','बड़ा'],size:'टेक्स्ट आकार: ',over:'10 MB से बड़ी है',notmd:'Markdown फ़ाइल नहीं है',
-     binary:'बाइनरी फ़ाइल लगती है',nothing:'रेंडर करने के लिए कुछ नहीं',url:'URL दर्ज करें',fetching:'लाया जा रहा है…',
-     fetchfail:'यह URL नहीं मिल सका (CORS या नेटवर्क). raw.githubusercontent.com लिंक आज़माएँ',
-     copied:'कॉपी हो गया — Word, Google Docs या ईमेल में पेस्ट करें',clipfail:'क्लिपबोर्ड ब्लॉक है — चुनकर Ctrl/Cmd+C दबाएँ',
-     word:'Word दस्तावेज़ डाउनलोड हो गया',clip:'क्लिपबोर्ड से रेंडर किया गया',
-     imgmiss:'छवि नहीं मिली — एकल फ़ाइल से सापेक्ष पथ लोड नहीं हो सकते',by:'openmdfile द्वारा रेंडर',
-     pdfgen:'PDF बनाया जा रहा है…',pdfok:'PDF डाउनलोड हो गया',copysrc:'Markdown स्रोत कॉपी हो गया',pdffail:'PDF नहीं बना — प्रिंट बटन का उपयोग करें'}
-};
-/* c = ISO 639-1 language code (used by hreflang/html lang — must stay hi/ar)
-   n = native name shown in the switcher */
-var LANGS=[{c:'en',n:'English'},{c:'zh',n:'简体中文'},
-           {c:'ar',n:'العربية'},{c:'hi',n:'हिन्दी'}];
-var RTL={ar:1};
-/* country -> language preset (used only when the browser language gives no hint) */
-var GEO2LANG={
-  CN:'zh',TW:'zh',HK:'zh',MO:'zh',SG:'zh',
-  IN:'hi',
-  SA:'ar',AE:'ar',EG:'ar',QA:'ar',KW:'ar',BH:'ar',OM:'ar',JO:'ar',LB:'ar',IQ:'ar',
-  LY:'ar',DZ:'ar',MA:'ar',TN:'ar',SD:'ar',YE:'ar',SY:'ar',PS:'ar',MR:'ar'
-};
-var LANG_SRC='default';
-function detectLang(){
-  var q=(location.search.match(/[?&]lang=([a-zA-Z-]+)/)||[])[1];
-  if(q){q=q.toLowerCase().split('-')[0];if(JT[q]){LANG_SRC='param';return q}}
-  var s=localStorage.getItem('omf-lang'); if(s&&JT[s]){LANG_SRC='saved';return s}
-  var langs=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];
-  for(var i=0;i<langs.length;i++){
-    var n=(langs[i]||'').toLowerCase();
-    if(n.indexOf('zh')===0){LANG_SRC='nav';return 'zh'}
-    if(n.indexOf('ar')===0){LANG_SRC='nav';return 'ar'}
-    if(n.indexOf('hi')===0){LANG_SRC='nav';return 'hi'}
-    if(n.indexOf('en')===0){LANG_SRC='nav-en';return 'en'}
-  }
-  return 'en';
-}
-var LANG=detectLang();
-/* IP/country preset — only for first-time visitors whose browser language
-   matched nothing (or matched generic English). Never overrides an explicit
-   ?lang= or a saved choice. Country is read from the CDN edge, not stored. */
-function geoPreset(){
-  if(LANG_SRC==='param'||LANG_SRC==='saved'||LANG_SRC==='nav')return;
-  var done=function(cc){
-    var g=GEO2LANG[(cc||'').toUpperCase()];
-    if(!g||g===LANG)return;
-    if(LANG_SRC==='nav-en'&&g!=='ar'&&g!=='zh'&&g!=='hi')return;
-    LANG=g; applyLang();
-    if(files.length&&$('#reader')&&$('#reader').style.display==='block') renderActive();
-  };
-  try{
-    fetch('/geo',{cache:'no-store'}).then(function(r){return r.ok?r.json():null})
-      .then(function(j){ if(j&&j.country) done(j.country) }).catch(function(){});
-  }catch(e){}
-}
-function t(k){return (JT[LANG]||JT.en)[k]}
+/* ================= strings ================= */
+var STR={sizes:['Small','Medium','Large'],size:'Text size: ',over:'is over 10 MB',notmd:'is not a Markdown file',
+  binary:'looks like a binary file',nothing:'Nothing to render',url:'Enter a URL',fetching:'Fetching…',
+  fetchfail:'Could not fetch that URL (CORS or network). Try a raw.githubusercontent.com link.',
+  copied:'Copied — paste into Word, Google Docs, or email',clipfail:'Clipboard blocked — try Ctrl/Cmd+C after selecting',
+  word:'Word document downloaded',clip:'Rendered from clipboard',
+  imgmiss:"Image not found — relative paths can't load from a single file",by:'rendered by openmdfile',
+  pdfgen:'Generating PDF…',pdfok:'PDF downloaded',copysrc:'Markdown source copied',pdffail:'PDF export failed — use the print button instead'};
+function t(k){return STR[k]}
 
-/* SEO: default H1 is EN-only in HTML (no zh/ar/hi glyphs in <h1>); lang switcher swaps from this map.
-   Values may contain <em> markup (static strings, ours). EN restores the original server HTML. */
-(function(){
-  var path=(location.pathname||'/').replace(/\/index\.html$/,'/').replace(/\/+$/,'')||'/';
-  var maps={
-    "/":{"en": "Open MD File Online", "zh": "在线打开 MD 文件", "ar": "افتح ملف MD عبر الإنترنت", "hi": "ऑनलाइन MD फ़ाइल खोलें"},
-    "/how-to-open-md-file":{"en": "How to Open an MD File", "zh": "如何打开 MD 文件", "ar": "كيف تفتح ملف MD", "hi": "MD फ़ाइल कैसे खोलें"},
-    "/learn/open-markdown-without-uploading":{"en": "How to open a Markdown file <em>without uploading</em> it", "zh": "如何<em>不上传</em>打开 Markdown 文件", "ar": "كيف تفتح ملف ماركداون <em>دون رفعه</em>", "hi": "Markdown फ़ाइल को <em>अपलोड किए बिना</em> कैसे खोलें"},
-    "/markdown-reader":{"en": "Markdown Reader — <em>source</em> and <em>preview</em>, side by side", "zh": "Markdown 阅读器——<em>源码</em>与<em>预览</em>左右对照", "ar": "قارئ ماركداون — <em>الشيفرة</em> و<em>المعاينة</em> جنبًا إلى جنب", "hi": "मार्कडाउन रीडर — <em>स्रोत</em> और <em>प्रीव्यू</em> साथ-साथ"},
-    "/md-to-pdf":{"en": "MD to <em>PDF</em> Converter — Free, No Watermark", "zh": "MD 转 <em>PDF</em> 转换器——免费、无水印", "ar": "محوّل MD إلى <em>PDF</em> — مجاني وبدون علامة مائية", "hi": "MD से <em>PDF</em> कन्वर्टर — मुफ़्त, बिना वॉटरमार्क"},
-    "/md-to-word":{"en": "MD to <em>Word</em> — keep it editable", "zh": "MD 转 <em>Word</em>——保持可编辑", "ar": "MD إلى <em>Word</em> — يبقى قابلًا للتحرير", "hi": "MD से <em>Word</em> — संपादन-योग्य रखें"},
-    "/md-viewer":{"en": "MD Viewer — view <em>Markdown</em> files online", "zh": "MD 查看器——在线查看 <em>Markdown</em> 文件", "ar": "عارض MD — اعرض ملفات <em>ماركداون</em> عبر الإنترنت", "hi": "MD व्यूअर — <em>Markdown</em> फ़ाइलें ऑनलाइन देखें"},
-    "/privacy":{"en": "Privacy Policy", "zh": "隐私协议", "ar": "سياسة الخصوصية", "hi": "गोपनीयता नीति"},
-    "/terms":{"en": "Terms of Service", "zh": "服务条款", "ar": "شروط الخدمة", "hi": "सेवा की शर्तें"},
-    "/what-is-an-md-file":{"en": "What is an <em>.md</em> file?", "zh": "什么是 <em>.md</em> 文件？", "ar": "ما هو ملف <em>.md</em>؟", "hi": "<em>.md</em> फ़ाइल क्या है?"}
-  };
-  window.PAGE_H1_I18N=maps[path]||null;
-  /* FAQ: default HTML is EN-only (matches FAQPage JSON-LD); zh/ar/hi Q&A swapped in by applyLang. */
-  var faq={
-"/md-viewer": {
-"zh": [
-[
-"这个 MD 查看器支持手机吗？",
-"支持。查看器完全响应式，任何现代手机浏览器都可使用——打开页面、点击选择文件即可阅读。"
-],
-[
-"支持哪些 Markdown 特性？",
-"完整 GFM：标题、表格、任务列表、删除线、带高亮的代码块、图片，另支持 Mermaid 图表与 KaTeX 数学公式。"
-],
-[
-"有文件大小限制吗？",
-"支持最大 10 MB 的文件，足以覆盖几乎所有实际场景的 Markdown 文档。"
-]
-],
-"ar": [
-[
-"هل يعمل عارض MD على الهاتف؟",
-"نعم. العارض متجاوب بالكامل ويعمل في أي متصفح هاتف حديث — افتح الصفحة، اضغط «اختر ملفًا»، واقرأ."
-],
-[
-"ما ميزات ماركداون المدعومة؟",
-"صيغة GitHub-flavored Markdown كاملة: العناوين والجداول وقوائم المهام والشطب وكتل الشيفرة مع التمييز والصور، إضافة إلى مخططات Mermaid ومعادلات KaTeX."
-],
-[
-"هل هناك حد لحجم الملف؟",
-"يدعم الملفات حتى 10 ميغابايت، وهو ما يغطي عمليًا كل مستندات ماركداون الواقعية."
-]
-],
-"hi": [
-[
-"क्या यह MD व्यूअर मोबाइल पर काम करता है?",
-"हाँ। व्यूअर पूरी तरह रिस्पॉन्सिव है और किसी भी आधुनिक मोबाइल ब्राउज़र में चलता है — पेज खोलें, “फ़ाइल चुनें” दबाएँ, और पढ़ें।"
-],
-[
-"कौन-सी Markdown सुविधाएँ समर्थित हैं?",
-"पूरा GitHub-flavored Markdown: हेडिंग, टेबल, टास्क लिस्ट, स्ट्राइकथ्रू, सिंटैक्स हाइलाइटिंग वाले कोड ब्लॉक, इमेज, साथ ही Mermaid डायग्राम और KaTeX गणित।"
-],
-[
-"क्या फ़ाइल आकार की कोई सीमा है?",
-"10 MB तक की फ़ाइलें समर्थित हैं, जो व्यावहारिक रूप से हर वास्तविक Markdown दस्तावेज़ को कवर करती हैं।"
-]
-]
-},
-"/markdown-reader": {
-"zh": [
-[
-"可以同时看到 Markdown 源码和预览吗？",
-"可以。本页默认以分栏视图打开文件：左边源码、右边渲染文档，两栏都完整展开。点击\"阅读\"按钮可收成单栏阅读模式。"
-],
-[
-"可以同时阅读多个 MD 文件吗？",
-"可以——一次拖入多个文件，通过阅读器顶部的标签页切换。"
-],
-[
-"暗色模式对文档内容也生效吗？",
-"生效。整篇文档（包括代码块与图表）都会切换到暗色配色。"
-]
-],
-"ar": [
-[
-"هل يمكنني رؤية شيفرة ماركداون والمعاينة في آنٍ واحد؟",
-"نعم. تفتح هذه الصفحة الملفات في عرض مقسوم افتراضيًا: الشيفرة على جانب والمستند المعروض على الجانب الآخر، وكلاهما معروض بالكامل. واستخدم زر «قراءة» لطيّه إلى عمود قراءة واحد."
-],
-[
-"هل يمكنني قراءة عدة ملفات MD معًا؟",
-"نعم — أفلت عدة ملفات دفعة واحدة وتنقّل بينها عبر التبويبات أعلى القارئ."
-],
-[
-"هل يعمل الوضع الداكن على المستند أيضًا؟",
-"نعم، ينتقل المستند بالكامل — بما في ذلك كتل الشيفرة والمخططات — إلى لوحة ألوان داكنة."
-]
-],
-"hi": [
-[
-"क्या मैं Markdown स्रोत और प्रीव्यू एक साथ देख सकता हूँ?",
-"हाँ। यह पेज फ़ाइलें डिफ़ॉल्ट रूप से स्प्लिट व्यू में खोलता है: एक ओर स्रोत, दूसरी ओर रेंडर दस्तावेज़, दोनों पूरे दिखते हैं। \"पढ़ें\" बटन से इसे एक पठन कॉलम में समेटें।"
-],
-[
-"क्या एक साथ कई MD फ़ाइलें पढ़ सकते हैं?",
-"हाँ — कई फ़ाइलें एक साथ छोड़ें और रीडर के ऊपर टैब से उनके बीच स्विच करें।"
-],
-[
-"क्या डार्क मोड दस्तावेज़ पर भी लागू होता है?",
-"हाँ, पूरा दस्तावेज़ — कोड ब्लॉक और डायग्राम सहित — डार्क पैलेट में बदल जाता है।"
-]
-]
-},
-"/md-to-pdf": {
-"zh": [
-[
-"PDF 有水印或页数限制吗？",
-"没有。导出完全免费，无水印、无页数限制、无需注册。"
-],
-[
-"表格和代码的格式会保留吗？",
-"会。PDF 直接从渲染后的文档生成，表格、高亮代码、图表与公式与屏幕预览一致。"
-],
-[
-"转换时我的 Markdown 会被上传吗？",
-"绝不会。PDF 由浏览器本地运行的 JavaScript 生成，文件始终留在你的设备上。"
-]
-],
-"ar": [
-[
-"هل يحتوي ملف PDF على علامة مائية أو قيود؟",
-"لا. التصدير مجاني تمامًا: بلا علامة مائية وبلا حدّ للصفحات وبلا تسجيل."
-],
-[
-"هل تحافظ الجداول والشيفرة على تنسيقها؟",
-"نعم. يُنشأ ملف PDF مباشرةً من المستند المعروض، لذا تطابق الجداول والشيفرة المميّزة والمخططات والمعادلات ما تراه على الشاشة."
-],
-[
-"هل يُرفع ملف ماركداون أثناء التحويل؟",
-"إطلاقًا. يُنشأ ملف PDF عبر JavaScript يعمل محليًا في متصفحك، ويبقى الملف على جهازك."
-]
-],
-"hi": [
-[
-"क्या PDF पर वॉटरमार्क या सीमा है?",
-"नहीं। एक्सपोर्ट पूरी तरह मुफ़्त है — न वॉटरमार्क, न पेज सीमा, न साइन-अप।"
-],
-[
-"क्या टेबल और कोड की फ़ॉर्मैटिंग बनी रहेगी?",
-"हाँ। PDF सीधे रेंडर किए दस्तावेज़ से बनती है, इसलिए टेबल, हाइलाइटेड कोड, डायग्राम और सूत्र स्क्रीन प्रीव्यू जैसे ही रहते हैं।"
-],
-[
-"क्या रूपांतरण के दौरान मेरा Markdown अपलोड होता है?",
-"कभी नहीं। PDF आपके ब्राउज़र में लोकल चल रहे JavaScript से बनती है; फ़ाइल आपके डिवाइस पर ही रहती है।"
-]
-]
-},
-"/md-to-word": {
-"zh": [
-[
-"Word 文件可以编辑吗？",
-"可以——输出是普通的可编辑文档，标题、表格、列表、代码块都能在 Word 中修改。"
-],
-[
-"支持 Google Docs 吗？",
-"支持。使用“复制富文本”直接粘贴到 Google Docs，格式保持不变。"
-],
-[
-"有水印或收费吗？",
-"没有。转换免费、不限次数、无水印，文件也绝不上传。"
-]
-],
-"ar": [
-[
-"هل يكون ملف Word قابلًا للتحرير؟",
-"نعم — المخرجات مستند عادي قابل للتحرير، ويمكن تعديل العناوين والجداول والقوائم وكتل الشيفرة داخل Word."
-],
-[
-"هل يعمل مع Google Docs؟",
-"نعم. استخدم «انسخ نصًا منسقًا» والصقه مباشرة في Google Docs مع الحفاظ على التنسيق."
-],
-[
-"هل توجد علامة مائية أو رسوم؟",
-"لا. التحويل مجاني وغير محدود وبلا علامة مائية، وملفك لا يُرفع أبدًا."
-]
-],
-"hi": [
-[
-"क्या Word फ़ाइल संपादन-योग्य होगी?",
-"हाँ — आउटपुट एक सामान्य संपादन-योग्य दस्तावेज़ है। हेडिंग, टेबल, सूचियाँ और कोड ब्लॉक सभी Word में बदले जा सकते हैं।"
-],
-[
-"क्या यह Google Docs के साथ काम करता है?",
-"हाँ। “रिच टेक्स्ट कॉपी करें” का उपयोग करें और सीधे Google Docs में पेस्ट करें — फ़ॉर्मैटिंग बनी रहती है।"
-],
-[
-"क्या कोई वॉटरमार्क या शुल्क है?",
-"नहीं। रूपांतरण मुफ़्त, असीमित और वॉटरमार्क-रहित है, और आपकी फ़ाइल कभी अपलोड नहीं होती।"
-]
-]
-},
-"/what-is-an-md-file": {
-"zh": [
-[
-"MD 文件打开安全吗？",
-"安全。.md 是纯文本，不可能包含可执行代码，用查看器或文本编辑器打开都没有风险。"
-],
-[
-"MD 文件可以编辑吗？",
-"可以——任何文本编辑器都行（记事本、TextEdit、VS Code）。本站专注阅读与导出；编辑用普通编辑器即可。"
-],
-[
-".md 和 .markdown 是同一种文件吗？",
-"是的，两者是同一格式的不同扩展名。本查看器都支持，另外还支持 .txt。"
-]
-],
-"ar": [
-[
-"هل فتح ملف MD آمن؟",
-"نعم. ملف .md نص بسيط ولا يمكن أن يحتوي شيفرة قابلة للتنفيذ، لذا فتحه في عارض أو محرر نصوص آمن تمامًا."
-],
-[
-"هل يمكنني تحرير ملف MD؟",
-"نعم — أي محرر نصوص يفي بالغرض (المفكرة، TextEdit، VS Code). يركّز هذا الموقع على القراءة والتصدير، أما التحرير فيكفيه محرر بسيط."
-],
-[
-"هل .md و .markdown الصيغة نفسها؟",
-"نعم، هما امتدادان للصيغة ذاتها. ويدعم هذا العارض كليهما إضافة إلى .txt."
-]
-],
-"hi": [
-[
-"क्या MD फ़ाइल खोलना सुरक्षित है?",
-"हाँ। .md सादा टेक्स्ट है और इसमें निष्पादन-योग्य कोड नहीं हो सकता। इसे व्यूअर या टेक्स्ट एडिटर में खोलना सुरक्षित है।"
-],
-[
-"क्या MD फ़ाइल संपादित कर सकते हैं?",
-"हाँ — कोई भी टेक्स्ट एडिटर काम करता है (Notepad, TextEdit, VS Code)। यह साइट पढ़ने और एक्सपोर्ट पर केंद्रित है; संपादन के लिए साधारण एडिटर पर्याप्त है।"
-],
-[
-"क्या .md और .markdown एक ही हैं?",
-"हाँ, ये एक ही फ़ॉर्मैट के दो एक्सटेंशन हैं। यह व्यूअर दोनों के साथ .txt भी खोलता है।"
-]
-]
-},
-"/learn/open-markdown-without-uploading": {
-"zh": [
-[
-"需要安装软件吗？",
-"不需要。页面与库加载后，选择 .md 即用浏览器 File API 本地读取——无需安装、不会上传。"
-],
-[
-"支持 GitHub Flavored Markdown（GFM）吗？",
-"支持。含表格、任务列表、代码高亮、删除线，以及页面已加载相应库时的 Mermaid 图与 KaTeX 公式等。"
-],
-[
-"和 mdtohtml.app 有什么区别？",
-"openmdfile 用于打开、阅读并导出为文档（预览 / PDF / Word）。mdtohtml.app 是姊妹工具，把 Markdown 转成或发布为网页 HTML。阅读用前者，要 HTML 输出用后者。"
-],
-[
-"你们的服务器会记录我的 Markdown 正文吗？",
-"不会。预览与 PDF/Word 导出时正文不离开浏览器；我们收不到、也不存储你的文档。CDN、语言国家提示、页面分析等可选请求都不包含 Markdown 正文。"
-],
-[
-"支持哪些格式与大小限制？",
-"仅 <code>.md</code>、<code>.markdown</code>、<code>.txt</code>。软限制约 <strong>10 MB</strong>——更大文件请用桌面编辑器。"
-],
-[
-"本地拖放预览或导出 PDF/Word 会上传正文吗？",
-"不会。本地拖放用浏览器 File API 在标签页内读取；预览与 PDF/Word 导出<strong>不会</strong>把文档正文上传到我们的服务器。"
-],
-[
-"“从 URL 打开”是零网络路径吗？",
-"不是。浏览器会请求你填写的远端主机——这不是零网络路径。即便本地文件，CDN 脚本与可选的 geo 语言提示仍可能加载；它们不包含你的 Markdown 正文。"
-]
-],
-"ar": [
-[
-"هل أحتاج إلى تثبيت أي شيء؟",
-"لا. بعد تحميل الصفحة ومكتباتها، اختيار ملف .md يقرأه محليًا عبر File API — بلا تثبيت وبلا رفع."
-],
-[
-"هل يدعم GitHub Flavored Markdown (GFM)؟",
-"نعم. يشمل الجداول وقوائم المهام والتعليمات البرمجية المظللة والمخططات والرياضيات عند توفر المكتبات."
-],
-[
-"ما الفرق عن mdtohtml.app؟",
-"openmdfile للقراءة والتصدير كمستند؛ mdtohtml.app أداة شقيقة لتحويل/نشر ماركداون كـ HTML للويب."
-],
-[
-"هل تسجّل خوادمكم محتوى ملف الماركداون؟",
-"لا. لا يغادر المحتوى متصفحك للمعاينة أو التصدير، ولا نستلم مستندك ولا نخزّنه."
-],
-[
-"ما الصيغ وحدود الحجم المدعومة؟",
-"فقط <code>.md</code> و<code>.markdown</code> و<code>.txt</code>. حد مرن نحو <strong>10 ميغابايت</strong> — للملفات الأكبر استخدم محررًا مكتبيًا."
-],
-[
-"هل يرفع الإفلات المحلي المستند للمعاينة أو PDF/Word؟",
-"لا. الإفلات المحلي يستخدم File API في تبويبك. المعاينة وتصدير PDF/Word <em>لا</em> ترفع نص المستند إلى خوادمنا."
-],
-[
-"هل «فتح من رابط» مسار بلا شبكة؟",
-"لا. متصفحك يجلب المضيف البعيد الذي كتبته — ليس مسارًا بلا شبكة. حتى مع الملفات المحلية قد تُحمَّل سكربتات CDN وتلميح geo اختياري؛ ولا تتضمن نص الماركداون."
-]
-],
-"hi": [
-[
-"क्या कुछ इंस्टॉल करना होगा?",
-"नहीं। पेज और लाइब्रेरी लोड होने के बाद .md चुनने पर File API से लोकल पढ़ा जाता है — इंस्टॉल नहीं, अपलोड नहीं।"
-],
-[
-"क्या GitHub Flavored Markdown (GFM) सपोर्ट है?",
-"हाँ। टेबल, टास्क लिस्ट, कोड हाइलाइट, तथा पेज पर लाइब्रेरी होने पर Mermaid/KaTeX आदि।"
-],
-[
-"mdtohtml.app से क्या अलग है?",
-"openmdfile पढ़ने और दस्तावेज़ एक्सपोर्ट के लिए है; mdtohtml.app बहन टूल है — Markdown को वेब HTML में कन्वर्ट/पब्लिश करने के लिए।"
-],
-[
-"क्या आपके सर्वर मेरी Markdown सामग्री लॉग करते हैं?",
-"नहीं। प्रीव्यू या PDF/Word के लिए सामग्री ब्राउज़र नहीं छोड़ती; हम दस्तावेज़ प्राप्त या संग्रहित नहीं करते।"
-],
-[
-"कौन से फ़ॉर्मैट और साइज़ सीमाएँ?",
-"केवल <code>.md</code>, <code>.markdown</code>, और <code>.txt</code>। नरम सीमा लगभग <strong>10 MB</strong> — बड़ी फ़ाइलें डेस्कटॉप एडिटर में खोलें।"
-],
-[
-"क्या लोकल ड्रॉप प्रीव्यू या PDF/Word के लिए दस्तावेज़ अपलोड करता है?",
-"नहीं। लोकल ड्रॉप आपके टैब में File API इस्तेमाल करता है। प्रीव्यू और PDF/Word एक्सपोर्ट दस्तावेज़ बॉडी हमारे सर्वर पर <em>अपलोड नहीं</em> करते।"
-],
-[
-"क्या “URL से खोलें” ज़ीरो-नेटवर्क पथ है?",
-"नहीं। ब्राउज़र आपके लिखे रिमोट होस्ट को फ़ेच करता है — यह ज़ीरो-नेटवर्क पथ नहीं है। लोकल फ़ाइलों पर भी CDN स्क्रिप्ट और वैकल्पिक geo भाषा संकेत लोड हो सकते हैं; उनमें आपका Markdown टेक्स्ट नहीं होता।"
-]
-]
+/* ================= on-demand libraries ================= */
+/* mermaid (~3 MB), KaTeX and html2pdf are only fetched when a document
+   actually needs them, so they never block the landing page. */
+var CDN='https://cdnjs.cloudflare.com/ajax/libs/';
+var LIBS={
+  mermaid:{js:[CDN+'mermaid/10.9.1/mermaid.min.js'],ready:function(){return !!window.mermaid}},
+  katex:{css:CDN+'KaTeX/0.16.9/katex.min.css',
+    js:[CDN+'KaTeX/0.16.9/katex.min.js',CDN+'KaTeX/0.16.9/contrib/auto-render.min.js'],
+    ready:function(){return !!window.renderMathInElement}},
+  html2pdf:{js:[CDN+'html2pdf.js/0.10.1/html2pdf.bundle.min.js'],ready:function(){return !!window.html2pdf}}
+};
+var libLoading={};
+function loadScript(src){
+  return new Promise(function(resolve,reject){
+    var s=document.createElement('script');
+    s.src=src;s.onload=resolve;s.onerror=reject;
+    document.head.appendChild(s);
+  });
 }
-};
-  window.PAGE_FAQ_I18N=faq[path]||null;
-})();
-
-function applyLang(){
-  var h=document.documentElement;
-  h.setAttribute('data-lang',LANG);
-  var pageH1=document.getElementById('pageH1');
-  if(pageH1){
-    if(pageH1.__enHTML==null) pageH1.__enHTML=pageH1.innerHTML;
-    var map=window.PAGE_H1_I18N||{};
-    var hv=(LANG!=='en'&&map[LANG])?map[LANG]:null;
-    pageH1.innerHTML=hv||pageH1.__enHTML;
-    if(LANG==='ar') pageH1.setAttribute('dir','rtl'); else pageH1.removeAttribute('dir');
+function loadLib(name){
+  var lib=LIBS[name];
+  if(lib.ready()) return Promise.resolve();
+  if(libLoading[name]) return libLoading[name];
+  if(lib.css&&!document.querySelector('link[href="'+lib.css+'"]')){
+    var l=document.createElement('link');l.rel='stylesheet';l.href=lib.css;document.head.appendChild(l);
   }
-  var fm=window.PAGE_FAQ_I18N;
-  if(fm){
-    var fl=(LANG!=='en'&&fm[LANG])?fm[LANG]:null;
-    document.querySelectorAll('.faq > details').forEach(function(d,i){
-      var s=d.querySelector('summary'),p=d.querySelector('summary ~ p');
-      if(!s||!p)return;
-      if(s.__enHTML==null){s.__enHTML=s.innerHTML;p.__enHTML=p.innerHTML;}
-      var tr=fl&&fl[i];
-      s.innerHTML=tr?tr[0]:s.__enHTML; p.innerHTML=tr?tr[1]:p.__enHTML;
-      if(tr&&LANG==='ar') d.setAttribute('dir','rtl'); else d.removeAttribute('dir');
-    });
-  }
-  h.lang=({en:'en',zh:'zh-CN',ar:'ar',hi:'hi'})[LANG]||'en';
-  h.setAttribute('dir',RTL[LANG]?'rtl':'ltr');
-  var cur=LANGS.filter(function(l){return l.c===LANG})[0]||LANGS[0];
-  var b=$('#langBtn'); if(b) b.innerHTML='<svg class="i"><use href="#ic-globe"/></svg> <span>'+cur.n+'</span>';
-  var m=$('#langMenu');
-  if(m) m.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-l')===LANG)});
+  var p=lib.js.reduce(function(chain,src){return chain.then(function(){return loadScript(src)})},Promise.resolve());
+  if(name==='mermaid') p=p.then(initMermaid);
+  libLoading[name]=p.catch(function(e){delete libLoading[name];throw e});
+  return libLoading[name];
 }
-window.setLang=function(c){
-  if(!JT[c])return;
-  LANG=c; localStorage.setItem('omf-lang',c);
-  applyLang(); closeLangMenu();
-  if(files.length&&$('#reader')&&$('#reader').style.display==='block') renderActive();
-};
-window.toggleLangMenu=function(e){
-  if(e)e.stopPropagation();
-  var m=$('#langMenu'); if(m) m.classList.toggle('open');
-};
-function closeLangMenu(){var m=$('#langMenu'); if(m) m.classList.remove('open')}
-document.addEventListener('click',closeLangMenu);
-/* legacy shim */
-window.toggleLang=function(e){toggleLangMenu(e)};
+function noop(){}
 
 /* ================= theme ================= */
 var THEME=localStorage.getItem('omf-theme')||'light';
@@ -468,7 +53,11 @@ function applyTheme(){
   document.documentElement.setAttribute('data-theme',THEME);
   var l=document.getElementById('hljs-light'),d=document.getElementById('hljs-dark');
   if(l&&d){l.disabled=(THEME==='dark');d.disabled=(THEME!=='dark');}
-  if(window.mermaid) mermaid.initialize({startOnLoad:false,theme:(THEME==='dark')?'dark':'neutral'});
+  if(window.mermaid) initMermaid();
+}
+/* SVG-text labels (no foreignObject) so diagrams survive html2canvas in PDF export */
+function initMermaid(){
+  mermaid.initialize({startOnLoad:false,theme:(THEME==='dark')?'dark':'neutral',htmlLabels:false,flowchart:{htmlLabels:false}});
 }
 window.toggleTheme=function(){
   THEME=(THEME==='dark')?'light':'dark';
@@ -495,7 +84,6 @@ var SPRITE='<svg width="0" height="0" style="position:absolute" aria-hidden="tru
 +'<symbol id="ic-word" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8.5 13l1.5 5 2-4 2 4 1.5-5"/></symbol>'
 +'<symbol id="ic-print" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>'
 +'<symbol id="ic-arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>'
-+'<symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>'
 +'</svg>';
 
 var READER='<div id="reader">'
@@ -508,8 +96,8 @@ var READER='<div id="reader">'
 +'<input type="file" id="fileInput2" accept=".md,.markdown,.txt" multiple hidden>'
 +'<div class="spacer"></div>'
 +'<div class="tool-group" id="modeGroup">'
-+'<button id="btnSplit" onclick="setSplit(1)" title="Split view"><span class="lang-en">Split</span><span class="lang-zh">分栏</span><span class="lang-ar" dir="rtl">مقسوم</span><span class="lang-hi">स्प्लिट</span></button>'
-+'<button id="btnRead" onclick="setSplit(0)" title="Reading view"><span class="lang-en">Read</span><span class="lang-zh">阅读</span><span class="lang-ar" dir="rtl">قراءة</span><span class="lang-hi">पढ़ें</span></button>'
++'<button id="btnSplit" onclick="setSplit(1)" title="Split view">Split</button>'
++'<button id="btnRead" onclick="setSplit(0)" title="Reading view">Read</button>'
 +'</div>'
 +'<div class="tool-group hide-mobile">'
 +'<button onclick="setFont(-1)" title="Smaller text">A−</button>'
@@ -518,40 +106,40 @@ var READER='<div id="reader">'
 +'<button onclick="toggleTheme()" title="Theme"><svg class="i"><use href="#ic-moon"/></svg></button>'
 +'<button onclick="window.print()" title="Print"><svg class="i"><use href="#ic-print"/></svg></button>'
 +'</div>'
-+'<button class="export-btn hide-mobile" onclick="copyRich()"><svg class="i"><use href="#ic-copy"/></svg> <span class="lang-en">Copy rich text</span><span class="lang-zh">复制富文本</span></button>'
++'<button class="export-btn hide-mobile" onclick="copyRich()"><svg class="i"><use href="#ic-copy"/></svg> Copy rich text</button>'
 +'<button class="export-btn" onclick="exportWord()"><svg class="i"><use href="#ic-word"/></svg> Word</button>'
 +'<button class="export-btn primary" onclick="exportPdf()"><svg class="i"><use href="#ic-drop"/></svg> PDF</button>'
 +'</div></div>'
 +'<div class="reader-layout">'
-+'<aside id="toc"><div class="toc-title"><span class="lang-en">Contents</span><span class="lang-zh">目录</span><span class="lang-ar" dir="rtl">الفهرس</span><span class="lang-hi">विषय-सूची</span></div><div id="tocList"></div></aside>'
++'<aside id="toc"><div class="toc-title">Contents</div><div id="tocList"></div></aside>'
 +'<main class="doc-wrap"><div id="panes">'
 +'<section class="pane pane-src">'
-+'<div class="pane-hd"><span><span class="lang-en">Markdown source</span><span class="lang-zh">Markdown 源码</span><span class="lang-ar" dir="rtl">شيفرة ماركداون</span><span class="lang-hi">Markdown स्रोत</span></span>'
++'<div class="pane-hd"><span>Markdown source</span>'
 +'<button class="pane-copy" onclick="copySource()" title="Copy source"><svg class="i"><use href="#ic-copy"/></svg></button></div>'
 +'<div class="pane-body" id="srcScroll"><pre id="srcBody"></pre></div>'
 +'</section>'
 +'<section class="pane pane-doc">'
-+'<div class="pane-hd"><span><span class="lang-en">Rendered preview</span><span class="lang-zh">渲染预览</span><span class="lang-ar" dir="rtl">المعاينة</span><span class="lang-hi">रेंडर प्रीव्यू</span></span></div>'
++'<div class="pane-hd"><span>Rendered preview</span></div>'
 +'<div class="pane-body" id="docScroll"><article id="doc"><div class="print-header" id="printHeader"></div><div id="docBody" dir="auto"></div></article></div>'
 +'</section>'
 +'</div></main>'
 +'</div></div>';
 
 var MODALS='<div class="modal-overlay" id="modal-paste"><div class="modal">'
-+'<h3><span class="lang-en">Paste Markdown text</span><span class="lang-zh">粘贴 Markdown 文本</span></h3>'
-+'<p class="hint"><span class="lang-en">Paste raw Markdown (e.g. copied from ChatGPT or Claude) and render it as a document.</span><span class="lang-zh">粘贴原始 Markdown（例如从 ChatGPT / Claude 复制的内容），立即渲染为文档。</span></p>'
++'<h3>Paste Markdown text</h3>'
++'<p class="hint">Paste raw Markdown (e.g. copied from ChatGPT or Claude) and render it as a document.</p>'
 +'<textarea id="pasteArea" placeholder="# My document&#10;&#10;…"></textarea>'
 +'<div class="modal-actions">'
-+'<button class="btn" onclick="closeModals()"><span class="lang-en">Cancel</span><span class="lang-zh">取消</span></button>'
-+'<button class="btn primary" onclick="renderPaste()"><span class="lang-en">Render</span><span class="lang-zh">渲染</span> <svg class="i"><use href="#ic-arrow"/></svg></button>'
++'<button class="btn" onclick="closeModals()">Cancel</button>'
++'<button class="btn primary" onclick="renderPaste()">Render <svg class="i"><use href="#ic-arrow"/></svg></button>'
 +'</div></div></div>'
 +'<div class="modal-overlay" id="modal-url"><div class="modal">'
-+'<h3><span class="lang-en">Open from URL</span><span class="lang-zh">从链接打开</span></h3>'
-+'<p class="hint"><span class="lang-en">Paste a link to a raw .md file (GitHub raw links work great). Fetched by your browser, never by our servers.</span><span class="lang-zh">粘贴 .md 文件直链（推荐 GitHub raw 链接）。由你的浏览器直接获取，不经过我们的服务器。</span></p>'
++'<h3>Open from URL</h3>'
++'<p class="hint">Paste a link to a raw .md file (GitHub raw links work great). Fetched by your browser, never by our servers.</p>'
 +'<input type="text" id="urlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/README.md">'
 +'<div class="modal-actions">'
-+'<button class="btn" onclick="closeModals()"><span class="lang-en">Cancel</span><span class="lang-zh">取消</span></button>'
-+'<button class="btn primary" onclick="loadUrl()"><span class="lang-en">Open</span><span class="lang-zh">打开</span> <svg class="i"><use href="#ic-arrow"/></svg></button>'
++'<button class="btn" onclick="closeModals()">Cancel</button>'
++'<button class="btn primary" onclick="loadUrl()">Open <svg class="i"><use href="#ic-arrow"/></svg></button>'
 +'</div></div></div>'
 +'<div id="toast"></div>';
 
@@ -702,8 +290,11 @@ function renderTabs(){
     el.appendChild(b);
   });
 }
+var renderSeq=0;
+var MATH_RE=/\$\$[\s\S]+?\$\$|\$[^$\n]+\$/;
 function renderActive(){
-  var f=files[active];if(!f)return;
+  var f=files[active];if(!f)return Promise.resolve();
+  var seq=++renderSeq;
   document.title=f.name+' — openmdfile';
   $('#printHeader').textContent=f.name+' · '+t('by');
   var src=$('#srcBody'); if(src) src.textContent=f.raw;
@@ -717,15 +308,28 @@ function renderActive(){
   });
   body.querySelectorAll('pre code.language-mermaid').forEach(function(c,i){
     var d=document.createElement('div');d.className='mermaid';d.textContent=c.textContent;d.id='mmd-'+Date.now()+'-'+i;
+    d.setAttribute('data-src',c.textContent);
     c.closest('pre').replaceWith(d);
   });
-  var after=function(){
-    body.querySelectorAll('pre code').forEach(function(c){try{hljs.highlightElement(c)}catch(e){}});
-    if(window.renderMathInElement){try{renderMathInElement(body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}}
-    buildToc();
-  };
-  if(window.mermaid){try{mermaid.run({nodes:body.querySelectorAll('.mermaid')}).then(after,after)}catch(e){after()}}
-  else after();
+  if(window.hljs) body.querySelectorAll('pre code').forEach(function(c){try{hljs.highlightElement(c)}catch(e){}});
+  buildToc();
+  var diagrams=body.querySelectorAll('.mermaid');
+  var needMath=MATH_RE.test(f.raw);
+  var stale=function(){return seq!==renderSeq};
+  var mmReady=diagrams.length?loadLib('mermaid'):null;
+  var mathReady=needMath?loadLib('katex'):null;
+  if(mathReady) mathReady.catch(noop);
+  /* math runs after mermaid so auto-render never rewrites diagram source */
+  return (mmReady?mmReady.then(function(){
+    if(stale())return;
+    try{return mermaid.run({nodes:diagrams}).catch(noop)}catch(e){}
+  },noop):Promise.resolve()).then(function(){
+    if(!mathReady)return;
+    return mathReady.then(function(){
+      if(stale())return;
+      try{renderMathInElement(body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}catch(e){}
+    },noop);
+  });
 }
 window.renderActive=renderActive;
 function buildToc(){
@@ -814,8 +418,10 @@ function flattenChecks(root){
 }
 window.exportPdf=function(){
   var f=files[active];if(!f)return;
-  if(!window.html2pdf){window.print();return}
   toast(t('pdfgen'));
+  loadLib('html2pdf').then(function(){buildPdf(f)},function(){window.print()});
+};
+function buildPdf(f){
   var wasDark=(THEME==='dark');
   var proceed=function(){
     /* wrapper is off-screen, but the captured element itself stays in normal
@@ -828,6 +434,15 @@ window.exportPdf=function(){
     el.className='pdf-doc';
     el.innerHTML='<div class="pdf-meta">'+f.name+' · '+t('by')+'</div>'+$('#docBody').innerHTML;
     flattenChecks(el);
+    /* mermaid emits width="100%" SVGs; html2canvas needs their real on-screen size */
+    var liveSvgs=document.querySelectorAll('#docBody .mermaid svg');
+    el.querySelectorAll('.mermaid svg').forEach(function(svg,i){
+      var r=liveSvgs[i]&&liveSvgs[i].getBoundingClientRect();
+      if(!r||!r.width)return;
+      var w=Math.min(r.width,780),h=r.height*(w/r.width);
+      svg.setAttribute('width',w);svg.setAttribute('height',h);
+      svg.style.maxWidth='none';
+    });
     wrap.appendChild(st); wrap.appendChild(el);
     document.body.appendChild(wrap);
     var opt={margin:[14,12,16,12],
@@ -853,9 +468,9 @@ window.exportPdf=function(){
         .then(function(){fin(true)},function(){fin(false)});
     }catch(e){ fin(false) }
   };
-  if(wasDark){THEME='light';applyTheme();renderActive();setTimeout(proceed,700)}
+  if(wasDark){THEME='light';applyTheme();renderActive().then(function(){setTimeout(proceed,100)})}
   else setTimeout(proceed,30);
-};
+}
 /* Word reads HTML, but only styles that are spelled out for it: without an
    embedded stylesheet it falls back to Calibri defaults and drops every table
    border. So the export ships its own print-oriented CSS plus MSO page setup. */
@@ -870,6 +485,8 @@ var WORD_CSS=''
 +'p{margin:5pt 0}'
 +'ul,ol{margin:5pt 0 5pt 0}'
 +'li{margin:3pt 0}'
++'li.task-item{list-style:none}'
++'p.task-item{margin:2pt 0}'
 +'table{border-collapse:collapse;width:100%;margin:8pt 0;font-size:10.5pt}'
 +'th,td{border:0.75pt solid #999999;padding:4pt 7pt;vertical-align:top}'
 +'th{background:#f2f2f2;font-weight:bold;text-align:left}'
@@ -882,12 +499,58 @@ var WORD_CSS=''
 +'hr{border:none;border-top:0.75pt solid #dddddd}'
 +'a{color:#0563c1}';
 
+/* Word cannot render KaTeX (MathML + unstyled HTML show up two or three times)
+   or Mermaid SVG, so the export carries their source text instead. */
+function texOf(node){
+  var a=node.querySelector('annotation[encoding="application/x-tex"]');
+  return a?a.textContent:node.textContent;
+}
+function wordifyMath(root){
+  root.querySelectorAll('.katex-display').forEach(function(k){
+    var tex='$$'+texOf(k)+'$$';
+    var p=k.closest('p');
+    if(p&&p.textContent.trim()===k.textContent.trim()){
+      var pre=document.createElement('pre');pre.textContent=tex;p.replaceWith(pre);
+    }else{
+      var c=document.createElement('code');c.textContent=tex;k.replaceWith(c);
+    }
+  });
+  root.querySelectorAll('.katex').forEach(function(k){
+    var c=document.createElement('code');c.textContent='$'+texOf(k)+'$';k.replaceWith(c);
+  });
+}
+function wordifyDiagrams(root){
+  root.querySelectorAll('.mermaid').forEach(function(m){
+    var note=document.createElement('p');
+    var em=document.createElement('em');
+    em.textContent='Mermaid diagram — export to PDF to keep the rendered chart.';
+    note.appendChild(em);
+    var pre=document.createElement('pre');
+    pre.textContent=m.getAttribute('data-src')||m.textContent;
+    m.replaceWith(note,pre);
+  });
+}
+/* checkbox glyphs already mark task items; a bullet on top doubles them up */
+function wordifyTasks(root){
+  root.querySelectorAll('ul').forEach(function(ul){
+    var items=Array.prototype.filter.call(ul.children,function(li){return li.tagName==='LI'});
+    if(!items.length||!items.every(function(li){return li.classList.contains('task-item')}))return;
+    var frag=document.createDocumentFragment();
+    items.forEach(function(li){
+      var p=document.createElement('p');p.className='task-item';p.innerHTML=li.innerHTML;frag.appendChild(p);
+    });
+    ul.replaceWith(frag);
+  });
+}
 window.exportWord=function(){
   var f=files[active];if(!f)return;
   /* work on a detached copy so the on-screen document is untouched */
   var body=document.createElement('div');
   body.innerHTML=$('#docBody').innerHTML;
   flattenChecks(body);
+  wordifyMath(body);
+  wordifyDiagrams(body);
+  wordifyTasks(body);
   /* Word honours the legacy border attribute far more reliably than CSS alone */
   body.querySelectorAll('table').forEach(function(tb){
     tb.setAttribute('border','1');
@@ -930,20 +593,9 @@ var SAMPLE_MD='# Q3 Product Strategy — AI Assistant Rollout\n\n'
 +'### Open questions\n\n1. Do we gate the assistant behind a feature flag per region?\n2. Latency budget: is **1.2 s p95** acceptable for chat?\n\n---\n\n*Questions? Ping #ai-rollout. Last updated 2026-07-14.*\n';
 
 /* ================= init ================= */
-function buildLangMenu(){
-  var host=document.querySelector('.lang-wrap');
-  if(!host||host.querySelector('#langMenu'))return;
-  var html='<div class="lang-menu" id="langMenu" onclick="event.stopPropagation()">';
-  LANGS.forEach(function(l){
-    html+='<button data-l="'+l.c+'" onclick="setLang(\''+l.c+'\')" lang="'+l.c+'">'+l.n+'</button>';
-  });
-  html+='</div>';
-  host.insertAdjacentHTML('beforeend',html);
-}
 function init(){
   document.body.insertAdjacentHTML('beforeend',SPRITE);
-  buildLangMenu();
-  applyLang();applyTheme();geoPreset();
+  applyTheme();
   var dz=document.getElementById('dropzone');
   if(dz){
     document.body.insertAdjacentHTML('beforeend',READER+MODALS);
@@ -956,7 +608,6 @@ function init(){
     }
     setSplit(document.body.getAttribute('data-split-default')==='1'?1:0);
     if(window.marked) marked.setOptions({gfm:true,breaks:false});
-    if(window.mermaid) mermaid.initialize({startOnLoad:false,theme:(THEME==='dark')?'dark':'neutral'});
     var fi=document.getElementById('fileInput');
     fi.addEventListener('change',function(e){handleFiles(e.target.files)});
     document.getElementById('fileInput2').addEventListener('change',function(e){handleFiles(e.target.files)});
@@ -973,7 +624,6 @@ function init(){
       var v=(e.clipboardData||window.clipboardData).getData('text');
       if(v&&v.length>20){files.push({name:'pasted.md',raw:v});active=files.length-1;showReader();toast(t('clip'))}
     });
-    applyLang(); /* re-apply for injected nodes (CSS handles it, but refresh lang btn) */
     /* embedded mode always shows a live document — preload the sample */
     if(EMBED&&!files.length) loadSample(true);
   }
