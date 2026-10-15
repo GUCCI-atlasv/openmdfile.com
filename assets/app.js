@@ -11,15 +11,18 @@ var STR={sizes:['Small','Medium','Large'],size:'Text size: ',over:'is over 10 MB
   copied:'Copied — paste into Word, Google Docs, or email',clipfail:'Clipboard blocked — try Ctrl/Cmd+C after selecting',
   word:'Word document downloaded',clip:'Rendered from clipboard',
   imgmiss:"Image not found — relative paths can't load from a single file",by:'rendered by openmdfile',
-  pdfgen:'Generating PDF…',pdfok:'PDF downloaded',copysrc:'Markdown source copied',pdffail:'PDF export failed — use the print button instead'};
+  pdfgen:'Generating PDF…',pdfok:'PDF downloaded',copysrc:'Markdown source copied',pdffail:'PDF export failed — use the print button instead',
+  mmdrender:'Rendering diagram…',mmdload:'The diagram renderer could not be loaded.',mmdloadhint:'Check your connection and reload the page.',
+  mmdnone:'No rendered diagrams to export',mmdbroken:'This diagram has a syntax error — fix it first',mmdfixed:'Diagram fixed',
+  mmdcopied:'Mermaid code copied',mmdzipping:'Building ZIP…',mmdexportfail:'Export failed',mmdchecking:'Checking syntax…'};
 function t(k){return STR[k]}
 
 /* ================= on-demand libraries ================= */
-/* mermaid (~3 MB), KaTeX and html2pdf are only fetched when a document
-   actually needs them, so they never block the landing page. */
+/* mermaid (~3 MB, via mermaid-kit), KaTeX and html2pdf are only fetched when
+   a document actually needs them, so they never block the landing page. */
 var CDN='https://cdnjs.cloudflare.com/ajax/libs/';
 var LIBS={
-  mermaid:{js:[CDN+'mermaid/10.9.1/mermaid.min.js'],ready:function(){return !!window.mermaid}},
+  mermaid:{js:['/assets/mermaid-kit.js?v=20261015a'],ready:function(){return !!window.MermaidKit}},
   katex:{css:CDN+'KaTeX/0.16.9/katex.min.css',
     js:[CDN+'KaTeX/0.16.9/katex.min.js',CDN+'KaTeX/0.16.9/contrib/auto-render.min.js'],
     ready:function(){return !!window.renderMathInElement}},
@@ -41,7 +44,7 @@ function loadLib(name){
     var l=document.createElement('link');l.rel='stylesheet';l.href=lib.css;document.head.appendChild(l);
   }
   var p=lib.js.reduce(function(chain,src){return chain.then(function(){return loadScript(src)})},Promise.resolve());
-  if(name==='mermaid') p=p.then(initMermaid);
+  if(name==='mermaid') p=p.then(function(){MermaidKit.ensureCss();return MermaidKit.ready()});
   libLoading[name]=p.catch(function(e){delete libLoading[name];throw e});
   return libLoading[name];
 }
@@ -53,11 +56,6 @@ function applyTheme(){
   document.documentElement.setAttribute('data-theme',THEME);
   var l=document.getElementById('hljs-light'),d=document.getElementById('hljs-dark');
   if(l&&d){l.disabled=(THEME==='dark');d.disabled=(THEME!=='dark');}
-  if(window.mermaid) initMermaid();
-}
-/* SVG-text labels (no foreignObject) so diagrams survive html2canvas in PDF export */
-function initMermaid(){
-  mermaid.initialize({startOnLoad:false,theme:(THEME==='dark')?'dark':'neutral',htmlLabels:false,flowchart:{htmlLabels:false}});
 }
 window.toggleTheme=function(){
   THEME=(THEME==='dark')?'light':'dark';
@@ -307,13 +305,12 @@ function renderActive(){
     };
   });
   body.querySelectorAll('pre code.language-mermaid').forEach(function(c,i){
-    var d=document.createElement('div');d.className='mermaid';d.textContent=c.textContent;d.id='mmd-'+Date.now()+'-'+i;
-    d.setAttribute('data-src',c.textContent);
-    c.closest('pre').replaceWith(d);
+    c.closest('pre').replaceWith(diagramBlock(c.textContent,i));
   });
   if(window.hljs) body.querySelectorAll('pre code').forEach(function(c){try{hljs.highlightElement(c)}catch(e){}});
   buildToc();
-  var diagrams=body.querySelectorAll('.mermaid');
+  var diagrams=body.querySelectorAll('.mmd-block');
+  if(diagrams.length>1) body.insertBefore(diagramBanner(diagrams.length),body.firstChild);
   var needMath=MATH_RE.test(f.raw);
   var stale=function(){return seq!==renderSeq};
   var mmReady=diagrams.length?loadLib('mermaid'):null;
@@ -322,8 +319,13 @@ function renderActive(){
   /* math runs after mermaid so auto-render never rewrites diagram source */
   return (mmReady?mmReady.then(function(){
     if(stale())return;
-    try{return mermaid.run({nodes:diagrams}).catch(noop)}catch(e){}
-  },noop):Promise.resolve()).then(function(){
+    MermaidKit.track('mermaid_extract',{count:diagrams.length,source:'md'});
+    return Array.prototype.reduce.call(diagrams,function(chain,blk){
+      return chain.then(function(){if(!stale()) return renderDiagram(blk)});
+    },Promise.resolve());
+  },function(){
+    diagrams.forEach(function(blk){showDiagramError(blk,{title:t('mmdload'),hint:t('mmdloadhint')},false)});
+  }):Promise.resolve()).then(function(){
     if(!mathReady)return;
     return mathReady.then(function(){
       if(stale())return;
@@ -332,6 +334,140 @@ function renderActive(){
   });
 }
 window.renderActive=renderActive;
+
+/* ================= mermaid diagrams ================= */
+function mmdTheme(){return THEME==='dark'?'dark':'neutral'}
+function mmdBg(){return THEME==='dark'?'#1e1e1e':'#ffffff'}
+function diagramBlock(code,i){
+  var blk=document.createElement('div');
+  blk.className='mmd-block';blk.setAttribute('data-i',i);
+  blk.innerHTML='<div class="mmd-tools" role="toolbar" aria-label="Diagram tools">'
+    +'<button data-m="code" title="View the Mermaid code">Code</button>'
+    +'<button data-m="copy" title="Copy the Mermaid code">Copy</button>'
+    +'<button data-m="png" title="Download as PNG">PNG</button>'
+    +'<button data-m="svg" title="Download as SVG">SVG</button>'
+    +'<button data-m="fix" title="Check and fix the syntax">Fix</button>'
+    +'<button data-m="open" title="Open in the Mermaid viewer">Open in tool ↗</button></div>'
+    +'<div class="mermaid mmd-loading"></div>';
+  var m=blk.querySelector('.mermaid');
+  m.setAttribute('data-src',code);m.textContent=t('mmdrender');
+  return blk;
+}
+function diagramBanner(n){
+  var d=document.createElement('div');d.className='mmd-banner';
+  d.innerHTML='<span>This file contains <strong>'+n+' diagrams</strong></span><span class="sp"></span>'
+    +'<select data-m-fmt aria-label="Export format"><option value="png">PNG (2x)</option><option value="svg">SVG</option></select>'
+    +'<button class="btn primary" data-m="zip">Export all (ZIP)</button>';
+  return d;
+}
+function renderDiagram(blk){
+  var m=blk.querySelector('.mermaid'),code=m.getAttribute('data-src');
+  return MermaidKit.render(code,{theme:mmdTheme()}).then(function(r){
+    MermaidKit.track('mermaid_render',{ok:r.ok,type:r.type||'unknown',source:'md'});
+    var old=blk.querySelector('.mmd-error');if(old)old.remove();
+    m.classList.remove('mmd-loading');
+    if(r.ok){m.innerHTML=r.svg;m.classList.remove('mmd-failed');blk.classList.remove('mmd-has-error')}
+    else showDiagramError(blk,r.error,true);
+  });
+}
+/* a broken diagram only replaces itself with an explanation — the rest of the document still renders */
+function showDiagramError(blk,e,canFix){
+  var m=blk.querySelector('.mermaid');
+  m.classList.remove('mmd-loading');m.classList.add('mmd-failed');m.textContent='';
+  blk.classList.add('mmd-has-error');
+  var box=document.createElement('div');box.className='mmd-error';
+  var h=document.createElement('p');h.className='mmd-err-title';h.textContent=e.title;
+  var p=document.createElement('p');p.className='mmd-err-hint';p.textContent=e.hint;
+  box.appendChild(h);box.appendChild(p);
+  if(e.snippet){var s=document.createElement('pre');s.className='mmd-snip';s.textContent=e.snippet;box.appendChild(s)}
+  if(canFix){
+    var a=document.createElement('div');a.className='mmd-err-actions';
+    a.innerHTML='<button class="btn primary" data-m="fix">Try to fix</button><button class="btn" data-m="code">Show code</button><button class="btn" data-m="open">Open in fixer ↗</button>';
+    box.appendChild(a);
+  }
+  m.parentNode.insertBefore(box,m.nextSibling);
+}
+function headingFor(blk){
+  var last='',nodes=$('#docBody').querySelectorAll('h1,h2,h3,h4,h5,h6,.mmd-block');
+  for(var i=0;i<nodes.length;i++){
+    if(nodes[i]===blk) break;
+    if(!nodes[i].classList.contains('mmd-block')) last=nodes[i].textContent;
+  }
+  return last;
+}
+function diagramMeta(blk){return {title:headingFor(blk),index:+blk.getAttribute('data-i')}}
+function applyDiagramFix(blk,fixed,res){
+  var m=blk.querySelector('.mermaid'),before=m.getAttribute('data-src'),i=+blk.getAttribute('data-i'),f=files[active];
+  MermaidKit.track('mermaid_fix_accept',{source:'md',rules:res.applied.map(function(r){return r.id}).join(',')});
+  var b=f&&MermaidKit.extract(f.raw)[i];
+  if(b&&b.code.trim()===before.trim()){
+    f.raw=MermaidKit.replaceBlock(f.raw,i,fixed);
+    var src=$('#srcBody'); if(src) src.textContent=f.raw;
+  }
+  m.setAttribute('data-src',fixed);
+  var pre=blk.querySelector('.mmd-code code'); if(pre) pre.textContent=fixed;
+  renderDiagram(blk).then(function(){toast(t('mmdfixed'))});
+}
+function exportAllDiagrams(fmt){
+  var K=MermaidKit,all=$('#docBody').querySelectorAll('.mmd-block');
+  var blks=Array.prototype.filter.call(all,function(b){return b.querySelector('.mermaid svg')});
+  if(!blks.length){toast(t('mmdnone'));return}
+  var names=K.fileNames(blks.map(diagramMeta),fmt),bg=mmdBg();
+  toast(t('mmdzipping'));
+  Promise.all(blks.map(function(b){
+    var svg=b.querySelector('.mermaid svg');
+    return fmt==='svg'?K.svgString(svg,{background:bg}):K.pngBlob(svg,{scale:2,background:bg});
+  })).then(function(datas){
+    return K.zip(datas.map(function(d,i){return {name:names[i],data:d}}));
+  }).then(function(zip){
+    var f=files[active],base=(f?f.name.replace(/\.(md|markdown|txt)$/i,''):'document');
+    K.download(zip,base+'-diagrams.zip');
+    K.track('mermaid_export',{format:fmt,scale:fmt==='png'?2:1,mode:'batch',count:blks.length,source:'md'});
+    var skipped=all.length-blks.length;
+    toast(blks.length+' diagrams exported'+(skipped?' · '+skipped+' with errors skipped':''));
+  },function(e){toast(t('mmdexportfail')+(e&&e.message?': '+e.message:''))});
+}
+function onDiagramClick(e){
+  var b=e.target.closest&&e.target.closest('[data-m]');
+  if(!b||!window.MermaidKit) return;
+  var K=MermaidKit,act=b.getAttribute('data-m');
+  if(act==='zip'){exportAllDiagrams(b.parentNode.querySelector('[data-m-fmt]').value);return}
+  var blk=b.closest('.mmd-block');if(!blk) return;
+  var m=blk.querySelector('.mermaid'),code=m.getAttribute('data-src'),svg=m.querySelector('svg');
+  var meta=diagramMeta(blk),name=K.fileNames([meta],'x')[0].replace(/\.x$/,'');
+  if(act==='code'){
+    var pre=blk.querySelector('.mmd-code'),btn=blk.querySelector('.mmd-tools [data-m="code"]');
+    if(pre){pre.remove();btn.classList.remove('on');return}
+    pre=document.createElement('pre');pre.className='mmd-code';
+    var c=document.createElement('code');c.textContent=code;pre.appendChild(c);
+    blk.appendChild(pre);btn.classList.add('on');
+  }else if(act==='copy'){
+    K.copyText(code).then(function(){toast(t('mmdcopied'))},function(){toast(t('clipfail'))});
+  }else if(act==='png'||act==='svg'){
+    if(!svg){toast(t('mmdbroken'));return}
+    var done=function(){K.track('mermaid_export',{format:act,scale:act==='png'?2:1,mode:'single',source:'md'})};
+    if(act==='svg'){K.download(K.svgString(svg,{background:mmdBg()}),name+'.svg','image/svg+xml');done()}
+    else K.pngBlob(svg,{scale:2,background:mmdBg()}).then(function(png){K.download(png,name+'.png');done()},function(){toast(t('mmdexportfail'))});
+  }else if(act==='fix'){
+    toast(t('mmdchecking'));
+    K.fix(code,{source:'md'}).then(function(res){
+      K.fixDialog(res,function(fixed){applyDiagramFix(blk,fixed,res)});
+    });
+  }else if(act==='open'){
+    var w=window.open('about:blank','_blank');
+    K.encodeShare(code).then(function(tok){
+      var url=(blk.classList.contains('mmd-has-error')?'/fix-mermaid-syntax/':'/mermaid-viewer/')+'#code='+tok;
+      if(w) w.location.href=url; else location.href=url;
+    });
+  }
+}
+/* exports carry the diagrams, not the on-screen buttons around them */
+function stripDiagramChrome(root){
+  root.querySelectorAll('.mmd-tools,.mmd-banner,.mmd-code,.mmd-error').forEach(function(n){n.remove()});
+  root.querySelectorAll('.mermaid.mmd-failed,.mermaid.mmd-loading').forEach(function(m){
+    var pre=document.createElement('pre');pre.textContent=m.getAttribute('data-src')||'';m.replaceWith(pre);
+  });
+}
 function buildToc(){
   var list=$('#tocList');list.innerHTML='';
   document.querySelectorAll('#docBody h1, #docBody h2, #docBody h3').forEach(function(h,i){
@@ -368,7 +504,10 @@ window.addEventListener('scroll',function(){
 
 /* ================= export ================= */
 window.copyRich=function(){
-  var html=$('#docBody').innerHTML,text=$('#docBody').innerText;
+  var clone=document.createElement('div');
+  clone.innerHTML=$('#docBody').innerHTML;
+  stripDiagramChrome(clone);
+  var html=clone.innerHTML,text=clone.innerText||clone.textContent;
   try{
     navigator.clipboard.write([new ClipboardItem({
       'text/html':new Blob([html],{type:'text/html'}),
@@ -433,6 +572,7 @@ function buildPdf(f){
     var el=document.createElement('div');
     el.className='pdf-doc';
     el.innerHTML='<div class="pdf-meta">'+f.name+' · '+t('by')+'</div>'+$('#docBody').innerHTML;
+    stripDiagramChrome(el);
     flattenChecks(el);
     /* mermaid emits width="100%" SVGs; html2canvas needs their real on-screen size */
     var liveSvgs=document.querySelectorAll('#docBody .mermaid svg');
@@ -547,6 +687,7 @@ window.exportWord=function(){
   /* work on a detached copy so the on-screen document is untouched */
   var body=document.createElement('div');
   body.innerHTML=$('#docBody').innerHTML;
+  stripDiagramChrome(body);
   flattenChecks(body);
   wordifyMath(body);
   wordifyDiagrams(body);
@@ -588,6 +729,7 @@ var SAMPLE_MD='# Q3 Product Strategy — AI Assistant Rollout\n\n'
 +'## Key metrics\n\n| Metric | Q2 baseline | Q3 target | Status |\n|---|---|---|---|\n| Weekly active users | 42,000 | 60,000 | On track |\n| Time-to-resolution | 3.4 h | 2.5 h | At risk |\n| CSAT | 4.2 | 4.5 | On track |\n| Infra cost / user | $0.31 | $0.25 | Behind |\n\n'
 +'## Launch checklist\n\n- [x] Security review completed\n- [x] Beta feedback synthesized (n = 214)\n- [ ] Pricing page update\n- [ ] Support macros localized (DE / JA)\n\n'
 +'## Rollout architecture\n\n```mermaid\nflowchart LR\n    A[User request] --> B{Router}\n    B -->|Simple| C[FAQ model]\n    B -->|Complex| D[Assistant LLM]\n    D --> E[Human review queue]\n    C --> F[Response]\n    D --> F\n    E --> F\n```\n\n'
++'## Request lifecycle\n\n```mermaid\nsequenceDiagram\n    participant U as User\n    participant R as Router\n    participant L as Assistant LLM\n    U->>R: Ask a question\n    R->>L: Complex query\n    L-->>R: Draft answer\n    R-->>U: Response\n```\n\n'
 +'## Cost model\n\nThe per-user cost follows:\n\n$$C(u) = \\frac{\\alpha \\cdot T_u}{\\eta} + \\beta$$\n\nwhere $T_u$ is tokens per user, $\\eta$ is cache hit efficiency, and $\\beta$ is fixed overhead.\n\n'
 +'## Implementation notes\n\n```python\ndef route_request(query: str) -> str:\n    """Route to the cheapest capable model."""\n    score = complexity(query)\n    if score < 0.3:\n        return faq_model(query)\n    return assistant_llm(query, review=score > 0.8)\n```\n\n'
 +'### Open questions\n\n1. Do we gate the assistant behind a feature flag per region?\n2. Latency budget: is **1.2 s p95** acceptable for chat?\n\n---\n\n*Questions? Ping #ai-rollout. Last updated 2026-07-14.*\n';
@@ -606,6 +748,7 @@ function init(){
       document.documentElement.setAttribute('data-embed','1');
       host.appendChild(document.getElementById('reader'));
     }
+    document.getElementById('docBody').addEventListener('click',onDiagramClick);
     setSplit(document.body.getAttribute('data-split-default')==='1'?1:0);
     if(window.marked) marked.setOptions({gfm:true,breaks:false});
     var fi=document.getElementById('fileInput');

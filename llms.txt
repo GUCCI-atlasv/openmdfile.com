@@ -17,6 +17,11 @@ openmdfile.com is a privacy-first Markdown tool from CCC Studio. Drop a .md file
 - https://openmdfile.com/markdown-reader/
 - https://openmdfile.com/md-to-pdf/
 - https://openmdfile.com/md-to-word/
+- https://openmdfile.com/mermaid-viewer/ — view Mermaid diagrams, export SVG/PNG
+- https://openmdfile.com/fix-mermaid-syntax/ — rule-based fixer for broken (often AI-generated) Mermaid code
+- https://openmdfile.com/mermaid-to-svg/
+- https://openmdfile.com/mermaid-to-png/
+- https://openmdfile.com/extract-mermaid-from-markdown/ — batch-export every Mermaid diagram in a .md file as a ZIP
 - https://openmdfile.com/what-is-an-md-file/
 - https://openmdfile.com/how-to-open-md-file/
 - https://openmdfile.com/learn/open-markdown-without-uploading/
@@ -25,7 +30,7 @@ openmdfile.com is a privacy-first Markdown tool from CCC Studio. Drop a .md file
 
 ## What it is / is not
 
-- Is: a free, browser-local Markdown viewer/reader with PDF and Word export
+- Is: a free, browser-local Markdown viewer/reader with PDF and Word export, plus Mermaid diagram viewing, fixing and SVG/PNG export
 - Is not: a cloud upload service, an account-gated editor, or a public training corpus
 
 ## Sister site

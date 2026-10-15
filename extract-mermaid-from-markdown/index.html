@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extract Mermaid Diagrams from Markdown — Batch Export ZIP | openmdfile</title>
+<meta name="description" content="Paste or upload a Markdown file and extract every Mermaid diagram at once. Preview thumbnails, pick the ones you need and download them as PNG or SVG in a ZIP.">
+<link rel="canonical" href="https://openmdfile.com/extract-mermaid-from-markdown/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="openmdfile">
+<meta property="og:title" content="Extract Mermaid Diagrams from Markdown — Batch Export ZIP | openmdfile">
+<meta property="og:description" content="Paste or upload a Markdown file and extract every Mermaid diagram at once. Preview thumbnails, pick the ones you need and download them as PNG or SVG in a ZIP.">
+<meta property="og:url" content="https://openmdfile.com/extract-mermaid-from-markdown/">
+<meta property="og:image" content="https://openmdfile.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Extract Mermaid Diagrams from Markdown — Batch Export ZIP | openmdfile">
+<meta name="twitter:description" content="Paste or upload a Markdown file and extract every Mermaid diagram at once. Preview thumbnails, pick the ones you need and download them as PNG or SVG in a ZIP.">
+<meta name="twitter:image" content="https://openmdfile.com/assets/og.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="stylesheet" href="/assets/style.css?v=20261015a">
+<link rel="stylesheet" href="/assets/mermaid.css?v=20261015a">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which code blocks are detected?", "acceptedAnswer": {"@type": "Answer", "text": "Fenced blocks marked mermaid or mmd, using either backticks (```mermaid) or tildes (~~~mermaid). Other code blocks are ignored."}}, {"@type": "Question", "name": "How are the exported files named?", "acceptedAnswer": {"@type": "Answer", "text": "After the nearest heading above each diagram, turned into a file-safe slug. Diagrams without a heading are numbered diagram-01, diagram-02 and so on."}}, {"@type": "Question", "name": "Is there a limit on file size or diagram count?", "acceptedAnswer": {"@type": "Answer", "text": "Files up to 10 MB are accepted. Diagrams render one after another, so even documents with dozens of diagrams work — the ZIP is built in your browser."}}, {"@type": "Question", "name": "Is my Markdown file uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. Reading, rendering and building the ZIP all happen locally in your browser. Nothing is sent to our servers."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Mermaid Extractor for Markdown — openmdfile", "url": "https://openmdfile.com/extract-mermaid-from-markdown/", "description": "Paste or upload a Markdown file and extract every Mermaid diagram at once. Preview thumbnails, pick the ones you need and download them as PNG or SVG in a ZIP.", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any (runs in a web browser)", "browserRequirements": "Requires JavaScript", "isAccessibleForFree": true, "featureList": ["Finds every ```mermaid block in a Markdown file", "Thumbnail previews", "Batch export to ZIP as PNG or SVG", "File names from the nearest heading", "Flags diagrams with syntax errors"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "CCC Studio"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://openmdfile.com/"}, {"@type": "ListItem", "position": 2, "name": "Extract Mermaid from Markdown", "item": "https://openmdfile.com/extract-mermaid-from-markdown/"}]}</script>
+</head>
+<body>
+<div id="page">
+
+<header class="site">
+  <div class="header-inner">
+    <a class="logo" href="/"><span class="logo-badge">.MD</span>openmdfile</a>
+    <nav class="site-nav">
+      <a href="/md-viewer/">MD Viewer</a>
+      <a href="/markdown-reader/">Markdown Reader</a>
+      <a href="/md-to-pdf/">MD to PDF</a>
+      <a href="/md-to-word/">MD to Word</a>
+      <a href="/mermaid-viewer/" class="on">Mermaid</a>
+      <a href="/what-is-an-md-file/">What is .md?</a>
+      <a href="/how-to-open-md-file/">How to open</a>
+      <a href="/learn/open-markdown-without-uploading/">No upload</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="toggleTheme()" title="Dark mode"><svg class="i"><use href="#ic-moon"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero compact">
+    <span class="kicker">Mermaid in Markdown · Batch export · Nothing uploaded</span>
+    <h1 id="pageH1">Extract <em>Mermaid</em> diagrams from Markdown</h1>
+    <p class="sub">Drop in a README, design doc or AI-generated report — every Mermaid diagram is found, previewed and ready to export as a ZIP.</p>
+  </section>
+</div>
+<div class="tool-full"><div id="mmdTool" data-mode="extract"><noscript>This tool runs in your browser and needs JavaScript.</noscript></div></div>
+<div class="wrap">
+  <nav class="tool-links" aria-label="Mermaid tools">
+    <a href="/mermaid-viewer/">Mermaid Viewer</a>
+    <a href="/fix-mermaid-syntax/">Fix Mermaid Syntax</a>
+    <a href="/mermaid-to-svg/">Mermaid to SVG</a>
+    <a href="/mermaid-to-png/">Mermaid to PNG</a>
+    <a href="/extract-mermaid-from-markdown/" class="on">Extract from Markdown</a>
+  </nav>
+
+  <article class="prose">
+<h2>Mermaid in Markdown, explained</h2>
+<p>Markdown files embed diagrams in fenced code blocks that start with <code>```mermaid</code>. GitHub, GitLab, Obsidian and many documentation tools draw these blocks as diagrams — but only inside their own pages. As soon as you need the pictures somewhere else, in a slide deck, a Word document or a ticket, you are left copying code block by block. This page does it for the whole file at once.</p>
+<h2>How to extract every diagram</h2>
+<ol>
+<li>Paste the Markdown or upload a <code>.md</code> file (or drag it onto the tool).</li>
+<li>Each <code>```mermaid</code>, <code>~~~mermaid</code> or <code>```mmd</code> block is rendered as a thumbnail, along with the heading it sits under.</li>
+<li>Untick any you do not need, choose PNG (1x, 2x, 3x) or SVG, and click <strong>Download ZIP</strong>.</li>
+</ol>
+<h2>Sensible file names</h2>
+<p>Files are named after the nearest heading above each diagram — a diagram under “## Checkout sequence” becomes <code>checkout-sequence.svg</code>. Diagrams without a heading are numbered <code>diagram-01</code>, <code>diagram-02</code> and so on, matching their order in the document, and duplicate names get a suffix so nothing is overwritten.</p>
+<h2>Broken diagrams are flagged, not skipped silently</h2>
+<p>AI-written documents often contain a diagram or two with syntax errors. Those cards show a plain-English explanation and a <strong>Fix it</strong> button that opens the code in the <a href="/fix-mermaid-syntax/">Mermaid syntax fixer</a>. Diagrams that render can be opened one by one in the <a href="/mermaid-viewer/">Mermaid viewer</a> for zooming and theme changes.</p>
+<h2>Want to read the document too?</h2>
+<p>If you also want to read the text around the diagrams, open the file in the <a href="/md-viewer/">MD viewer</a>. Every diagram there gets its own PNG and SVG buttons, and files with two or more diagrams have an <em>Export all (ZIP)</em> button at the top. As with every openmdfile tool, the file is processed in your browser and never uploaded. Single diagrams can also go straight to <a href="/mermaid-to-svg/">SVG</a> or <a href="/mermaid-to-png/">PNG</a>.</p>
+  </article>
+
+  <h2 class="section-title">FAQ</h2>
+  <div class="faq">
+    <details><summary>Which code blocks are detected?</summary>
+      <p>Fenced blocks marked mermaid or mmd, using either backticks (```mermaid) or tildes (~~~mermaid). Other code blocks are ignored.</p></details>
+    <details><summary>How are the exported files named?</summary>
+      <p>After the nearest heading above each diagram, turned into a file-safe slug. Diagrams without a heading are numbered diagram-01, diagram-02 and so on.</p></details>
+    <details><summary>Is there a limit on file size or diagram count?</summary>
+      <p>Files up to 10 MB are accepted. Diagrams render one after another, so even documents with dozens of diagrams work — the ZIP is built in your browser.</p></details>
+    <details><summary>Is my Markdown file uploaded?</summary>
+      <p>No. Reading, rendering and building the ZIP all happen locally in your browser. Nothing is sent to our servers.</p></details>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="f-links">
+    <a href="/md-viewer/">MD Viewer</a>
+    <a href="/markdown-reader/">Markdown Reader</a>
+    <a href="/md-to-pdf/">MD to PDF</a>
+    <a href="/md-to-word/">MD to Word</a>
+    <a href="/what-is-an-md-file/">What is .md?</a>
+    <a href="/how-to-open-md-file/">How to open</a>
+    <a href="/learn/open-markdown-without-uploading/">No upload</a>
+    <a href="https://mdtohtml.app">mdtohtml.app</a>
+    <a href="/privacy/">Privacy Policy</a>
+    <a href="/terms/">Terms of Service</a>
+    <a href="mailto:support@openmdfile.com">Contact</a>
+  </div>
+  <div class="f-links">
+    <a href="/mermaid-viewer/">Mermaid Viewer</a>
+    <a href="/fix-mermaid-syntax/">Fix Mermaid Syntax</a>
+    <a href="/mermaid-to-svg/">Mermaid to SVG</a>
+    <a href="/mermaid-to-png/">Mermaid to PNG</a>
+    <a href="/extract-mermaid-from-markdown/">Extract Mermaid from Markdown</a>
+  </div>
+  <div class="f-note">© 2026 CCC Studio · openmdfile — free online markdown viewer &amp; reader · support@openmdfile.com<br>Mermaid is an independent open-source project; openmdfile is not affiliated with or endorsed by it.</div>
+</footer>
+
+</div><!-- /#page -->
+<script defer src="/assets/app.js?v=20261015a"></script>
+<script defer src="/assets/mermaid-tool.js?v=20261015a"></script>
+<script src="https://ccc-monitor.583079497.workers.dev/beacon.js" data-site="openmdfile.com" defer></script>
+</body>
+</html>
