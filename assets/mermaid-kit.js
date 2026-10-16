@@ -12,7 +12,7 @@ var MERMAID_VERSION='10.9.1';
 var CDN='https://cdnjs.cloudflare.com/ajax/libs/';
 var MERMAID_SRC=CDN+'mermaid/'+MERMAID_VERSION+'/mermaid.min.js';
 var PURIFY_SRC=CDN+'dompurify/3.1.6/purify.min.js';
-var CSS_HREF='/assets/mermaid.css?v=20261015a';
+var CSS_HREF='/assets/mermaid.css?v=20261016a';
 
 function noop(){}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -864,13 +864,19 @@ function decodeShare(token){
 }
 
 /* ================= analytics hook =================
-   Events go to whatever analytics the page has (gtag / dataLayer) and are
-   also dispatched as `omf:track`. Diagram code is never included. */
+   Events go to GA4 (gtag) or, without gtag, to a GTM dataLayer, and are
+   also dispatched as `omf:track`. Diagram code is never included.
+   GA4 drops parameter values longer than 100 characters. */
 function track(name,props){
-  props=props||{};
+  var p={};
+  Object.keys(props||{}).forEach(function(k){
+    var v=props[k];
+    p[k]=typeof v==='number'?v:String(v).slice(0,100);
+  });
+  props=p;
   try{
     if(typeof window.gtag==='function') window.gtag('event',name,props);
-    if(Array.isArray(window.dataLayer)) window.dataLayer.push(Object.assign({event:name},props));
+    else if(Array.isArray(window.dataLayer)) window.dataLayer.push(Object.assign({event:name},props));
     (window.__omfEvents=window.__omfEvents||[]).push({name:name,props:props,t:Date.now()});
     document.dispatchEvent(new CustomEvent('omf:track',{detail:{name:name,props:props}}));
   }catch(e){}

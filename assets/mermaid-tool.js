@@ -539,7 +539,7 @@ function initExtract(){
 /* the renderer is fetched after first paint so it never delays LCP */
 function boot(){
   var load=window.MermaidKit?Promise.resolve():new Promise(function(resolve,reject){
-    var s=document.createElement('script');s.src='/assets/mermaid-kit.js?v=20261015a';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);
+    var s=document.createElement('script');s.src='/assets/mermaid-kit.js?v=20261016a';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);
   });
   return load.then(function(){K=window.MermaidKit;return K.ready()}).catch(function(){
     toast('Could not load the Mermaid renderer — check your connection');

@@ -22,7 +22,7 @@ function t(k){return STR[k]}
    a document actually needs them, so they never block the landing page. */
 var CDN='https://cdnjs.cloudflare.com/ajax/libs/';
 var LIBS={
-  mermaid:{js:['/assets/mermaid-kit.js?v=20261015a'],ready:function(){return !!window.MermaidKit}},
+  mermaid:{js:['/assets/mermaid-kit.js?v=20261016a'],ready:function(){return !!window.MermaidKit}},
   katex:{css:CDN+'KaTeX/0.16.9/katex.min.css',
     js:[CDN+'KaTeX/0.16.9/katex.min.js',CDN+'KaTeX/0.16.9/contrib/auto-render.min.js'],
     ready:function(){return !!window.renderMathInElement}},
